@@ -1,0 +1,1085 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2c5464">
+<title>湯めぐり帖</title>
+</head>
+<body>
+<!--ARTIFACT-START-->
+<title>湯めぐり帖</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@500&display=swap">
+
+<style>
+:root{
+  --ground:#ecefea;
+  --surface:#ffffff;
+  --surface-2:#f5f7f3;
+  --ink:#18242a;
+  --ink-2:#4e6065;
+  --ink-3:#7f8f90;
+  --line:#d9ded8;
+  --line-soft:#e8ece6;
+  --ai:#2c5464;
+  --ai-2:#4a7a8c;
+  --yamabuki:#b8801c;
+  --yamabuki-soft:#f4e7cb;
+  --ok:#3a7a57;
+  --ok-soft:#dfeee5;
+  --warn:#a9661f;
+  --warn-soft:#f7e8d4;
+  --mute:#8b938d;
+  --noren:#2c5464;
+  --on-ai:#ffffff;
+  --shadow-1:0 1px 2px rgba(24,36,42,.06);
+  --shadow-2:0 1px 2px rgba(24,36,42,.06), 0 10px 28px -14px rgba(24,36,42,.28);
+  --sheet-shadow:0 -8px 40px -12px rgba(24,36,42,.35);
+  --r-s:6px; --r-m:10px; --r-l:16px;
+  --display:"Zen Old Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  --body:"Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+  --round:"Zen Maru Gothic", "Zen Kaku Gothic New", sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#101a1e; --surface:#182429; --surface-2:#1f2d33;
+    --ink:#e6eeea; --ink-2:#a7bbbd; --ink-3:#7c9195;
+    --line:#2b3b41; --line-soft:#223238;
+    --ai:#8fbfd0; --ai-2:#6e9cae;
+    --yamabuki:#e0ad52; --yamabuki-soft:#3a3122;
+    --ok:#6db28e; --ok-soft:#20332b;
+    --warn:#d5985a; --warn-soft:#352a1d;
+    --mute:#87938f; --noren:#14343f; --on-ai:#0f1a1e;
+    --shadow-1:0 1px 2px rgba(0,0,0,.4);
+    --shadow-2:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
+    --sheet-shadow:0 -8px 40px -12px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#101a1e; --surface:#182429; --surface-2:#1f2d33;
+  --ink:#e6eeea; --ink-2:#a7bbbd; --ink-3:#7c9195;
+  --line:#2b3b41; --line-soft:#223238;
+  --ai:#8fbfd0; --ai-2:#6e9cae;
+  --yamabuki:#e0ad52; --yamabuki-soft:#3a3122;
+  --ok:#6db28e; --ok-soft:#20332b;
+  --warn:#d5985a; --warn-soft:#352a1d;
+  --mute:#87938f; --noren:#14343f; --on-ai:#0f1a1e;
+  --shadow-1:0 1px 2px rgba(0,0,0,.4);
+  --shadow-2:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
+  --sheet-shadow:0 -8px 40px -12px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--body); font-size:17px; line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,textarea,select{font:inherit; color:inherit}
+button{cursor:pointer; border:none; background:none; padding:0}
+img{max-width:100%; display:block}
+a{color:var(--ai-2)}
+:focus-visible{outline:2.5px solid var(--ai-2); outline-offset:2px; border-radius:3px}
+@media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important; transition-duration:.001ms !important} }
+
+.wrap{max-width:640px; margin:0 auto; padding-inline:16px}
+
+/* ---------- 暖簾ヘッダー ---------- */
+.noren{background:var(--noren); color:#f2f6f4; position:relative; padding-block:22px 30px; overflow:hidden}
+.noren .wrap{display:flex; align-items:center; gap:13px}
+.mark{
+  flex:0 0 auto; width:46px; height:46px; border-radius:50%;
+  border:1.5px solid rgba(242,246,244,.5); display:grid; place-items:center;
+  font-size:23px; line-height:1; color:#f2f6f4;
+}
+.noren h1{margin:0; font-family:var(--display); font-weight:700; font-size:27px; letter-spacing:.09em; line-height:1.25; color:#f7faf8}
+.noren p{margin:2px 0 0; font-size:12.5px; letter-spacing:.1em; color:rgba(242,246,244,.75)}
+.steam{position:absolute; left:0; right:0; bottom:-1px; height:16px; width:100%; display:block}
+
+/* ---------- タブ ---------- */
+.tabbar{
+  position:fixed; left:0; right:0; bottom:0; z-index:60;
+  background:var(--surface); border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom); box-shadow:0 -2px 12px -6px rgba(24,36,42,.25);
+}
+.tabbar .wrap{display:grid; grid-template-columns:repeat(3,1fr); padding-inline:8px}
+.tab{
+  display:flex; flex-direction:column; align-items:center; gap:2px;
+  padding:9px 2px 8px; color:var(--ink-3); font-size:11px; letter-spacing:0; white-space:nowrap;
+  border-top:2.5px solid transparent; margin-top:-1px; min-height:56px; justify-content:center;
+}
+.tab svg{width:22px; height:22px; display:block}
+.tab[aria-selected="true"]{color:var(--ai); border-top-color:var(--yamabuki); font-weight:700}
+
+main{padding-bottom:96px}
+.view[hidden]{display:none}
+
+/* ---------- 写真で見る（横スクロール） ---------- */
+.striphead{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin:18px 0 9px}
+.striphead h2{margin:0; font-family:var(--display); font-size:17px; font-weight:700; letter-spacing:.1em}
+.striphead span{font-size:11.5px; color:var(--ink-3); letter-spacing:.04em}
+.strip{
+  display:flex; gap:11px; overflow-x:auto; scroll-snap-type:x mandatory;
+  scrollbar-width:none; padding:2px 16px 4px; margin-inline:-16px;
+}
+.strip::-webkit-scrollbar{display:none}
+.shot{
+  flex:0 0 auto; width:258px; scroll-snap-align:start; position:relative;
+  border-radius:var(--r-m); overflow:hidden; background:var(--surface-2);
+  box-shadow:var(--shadow-2); text-align:left; display:block; border:1px solid var(--line);
+}
+.shot img{width:100%; height:172px; object-fit:cover}
+.shot .veil{
+  position:absolute; inset:auto 0 0 0; padding:28px 13px 11px; color:#fff;
+  background:linear-gradient(to top, rgba(10,18,22,.9) 12%, rgba(10,18,22,.45) 55%, transparent);
+}
+.shot .veil b{
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  font-family:var(--display); font-size:17.5px; font-weight:700; letter-spacing:.03em; line-height:1.35;
+}
+.shot .veil small{display:block; font-size:11.5px; opacity:.9; margin-top:2px; letter-spacing:.04em}
+.shot .veil i{display:block; font-style:normal; font-size:10.5px; opacity:.72; margin-top:4px; letter-spacing:.03em}
+
+/* ---------- 注意書き・名前 ---------- */
+.notice{
+  margin:16px 0 0; padding:12px 14px; border-radius:var(--r-m);
+  background:var(--warn-soft); color:var(--warn); font-size:13.5px; line-height:1.65;
+  border:1px solid color-mix(in srgb, var(--warn) 22%, transparent);
+}
+.notice b{font-weight:700}
+.whoami{
+  margin-top:14px; background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--r-m); padding:12px 14px; display:flex; align-items:center;
+  gap:10px; flex-wrap:wrap; box-shadow:var(--shadow-1);
+}
+.whoami label{font-size:13px; color:var(--ink-2); letter-spacing:.04em; white-space:nowrap}
+.whoami input{flex:1 1 140px; min-width:0; padding:9px 11px; border:1px solid var(--line); border-radius:var(--r-s); background:var(--surface-2); font-size:16px}
+
+/* ---------- フィルタ ---------- */
+.filters{position:sticky; top:0; z-index:40; background:var(--ground); padding-block:12px 10px}
+.filters::after{content:""; display:block; height:1px; background:var(--line-soft); margin-top:10px}
+.chiprow{display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px}
+.chiprow::-webkit-scrollbar{display:none}
+.chiprow + .chiprow{margin-top:8px}
+.chip{
+  flex:0 0 auto; padding:9px 14px; border-radius:var(--r-s); border:1px solid var(--line);
+  background:var(--surface); font-size:13.5px; color:var(--ink-2); white-space:nowrap;
+  letter-spacing:.02em; min-height:40px; display:inline-flex; align-items:center;
+  transition:background .12s, color .12s, border-color .12s;
+}
+.chip[aria-pressed="true"]{background:var(--ai); border-color:var(--ai); color:var(--on-ai); font-weight:700}
+.chip.sort[aria-pressed="true"]{background:var(--yamabuki); border-color:var(--yamabuki); color:#241a05}
+
+.resultline{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin:14px 0 10px; font-size:13px; color:var(--ink-3); letter-spacing:.03em}
+.resultline b{color:var(--ink); font-size:15px; font-variant-numeric:tabular-nums}
+
+/* ---------- 一覧カード ---------- */
+.list{display:flex; flex-direction:column; gap:10px; margin:0; padding:0; list-style:none}
+.card{
+  width:100%; text-align:left; display:block; background:var(--surface);
+  border:1px solid var(--line); border-left:4px solid var(--line);
+  border-radius:var(--r-m); padding:13px 14px; box-shadow:var(--shadow-1);
+  transition:box-shadow .14s, transform .14s;
+}
+.card:hover{box-shadow:var(--shadow-2)}
+.card:active{transform:scale(.994)}
+.card.kashikiri{border-left-color:var(--ok)}
+.card.mild{border-left-color:var(--yamabuki)}
+.card-top{display:flex; align-items:flex-start; gap:12px}
+.thumb{
+  flex:0 0 auto; width:92px; height:92px; border-radius:8px; overflow:hidden;
+  background:var(--surface-2); border:1px solid var(--line-soft);
+}
+.thumb img{width:100%; height:100%; object-fit:cover}
+.thumb.none{
+  display:grid; place-items:center; font-size:30px; color:var(--ai);
+  background:linear-gradient(150deg, var(--surface-2) 0%, var(--yamabuki-soft) 100%);
+}
+.card h3{margin:0; font-family:var(--display); font-weight:700; font-size:19px; line-height:1.4; letter-spacing:.02em; text-wrap:balance}
+.card .area{margin:3px 0 0; font-size:12.5px; color:var(--ink-3); letter-spacing:.04em}
+.card .far{margin:5px 0 0; font-size:13px; color:var(--ai); font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:.02em}
+.card .far span{color:var(--ink-3); font-weight:400; font-size:12px}
+
+.badges{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
+.badge{font-size:11.5px; letter-spacing:.03em; padding:3px 8px; border-radius:999px; background:var(--surface-2); color:var(--ink-2); border:1px solid var(--line-soft); white-space:nowrap}
+.badge.b-ok{background:var(--ok-soft); color:var(--ok); border-color:color-mix(in srgb, var(--ok) 25%, transparent); font-weight:700}
+.badge.b-warn{background:var(--warn-soft); color:var(--warn); border-color:color-mix(in srgb, var(--warn) 25%, transparent)}
+.badge.b-stay{background:var(--yamabuki-soft); color:var(--yamabuki); border-color:color-mix(in srgb, var(--yamabuki) 28%, transparent)}
+
+.card-foot{display:flex; align-items:center; gap:10px; margin-top:10px; padding-top:9px; border-top:1px dashed var(--line-soft); font-size:12.5px; color:var(--ink-3)}
+.stars{color:var(--yamabuki); letter-spacing:.09em; font-size:14.5px; line-height:1}
+.stars .off{color:var(--line)}
+.avg{font-variant-numeric:tabular-nums; color:var(--ink-2); font-weight:700}
+.card-foot .cnt{margin-left:auto}
+
+.empty{text-align:center; padding:40px 20px; color:var(--ink-3); font-size:14.5px; background:var(--surface); border:1px dashed var(--line); border-radius:var(--r-m)}
+
+/* ---------- ランキング ---------- */
+.rank{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px}
+.rank .card{display:flex; align-items:center; gap:12px}
+.rank-no{flex:0 0 auto; width:26px; font-family:var(--display); font-size:22px; font-weight:700; color:var(--ink-3); text-align:center; font-variant-numeric:tabular-nums; line-height:1}
+.rank li:nth-child(1) .rank-no{color:var(--yamabuki)}
+.rank .thumb{width:64px; height:64px}
+.rank-body{min-width:0; flex:1}
+.rank-body h3{font-size:17px}
+
+/* ---------- 応援ボード ---------- */
+.cheer-intro{margin:16px 0 0; font-family:var(--round); font-size:15px; line-height:1.85; color:var(--ink-2); background:var(--surface); border:1px solid var(--line); border-radius:var(--r-m); padding:15px 16px}
+.cheerform{margin-top:12px; display:flex; flex-direction:column; gap:9px}
+.cheerform textarea{width:100%; min-height:88px; padding:12px 13px; border:1px solid var(--line); border-radius:var(--r-m); background:var(--surface); font-family:var(--round); font-size:16px; line-height:1.7; resize:vertical}
+.cheers{list-style:none; margin:18px 0 0; padding:0; display:flex; flex-direction:column; gap:10px}
+.cheers li{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-m); padding:13px 15px; box-shadow:var(--shadow-1); font-family:var(--round)}
+.cheers p{margin:0; font-size:16px; line-height:1.8; white-space:pre-wrap; word-break:break-word}
+.cheers .meta{margin-top:7px; font-size:12px; color:var(--ink-3); letter-spacing:.04em; font-family:var(--body)}
+
+/* ---------- ボタン ---------- */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:48px; padding:0 20px; border-radius:var(--r-m); font-size:16px; font-weight:700; letter-spacing:.04em; background:var(--ai); color:var(--on-ai); transition:opacity .12s}
+.btn:active{opacity:.85}
+.btn-ghost{background:transparent; color:var(--ai); border:1px solid var(--line)}
+
+/* ---------- 詳細シート ---------- */
+.scrim{position:fixed; inset:0; z-index:70; background:rgba(16,26,30,.5); animation:fade .16s ease-out}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.sheet{
+  position:fixed; left:0; right:0; bottom:0; z-index:71; max-height:94dvh;
+  background:var(--ground); border-radius:var(--r-l) var(--r-l) 0 0;
+  box-shadow:var(--sheet-shadow); display:flex; flex-direction:column;
+  animation:rise .22s cubic-bezier(.22,.8,.3,1);
+}
+@keyframes rise{from{transform:translateY(26px); opacity:.6}to{transform:none; opacity:1}}
+.sheet-head{flex:0 0 auto; padding:14px 16px 12px; border-bottom:1px solid var(--line); background:var(--surface); border-radius:var(--r-l) var(--r-l) 0 0; display:flex; align-items:flex-start; gap:12px; position:relative}
+.grip{position:absolute; top:6px; left:50%; transform:translateX(-50%); width:38px; height:4px; border-radius:99px; background:var(--line)}
+.sheet-head h2{margin:0; font-family:var(--display); font-size:22px; font-weight:700; line-height:1.35; letter-spacing:.02em; text-wrap:balance}
+.sheet-head .area{margin:4px 0 0; font-size:12.5px; color:var(--ink-3); letter-spacing:.04em}
+.closex{flex:0 0 auto; width:40px; height:40px; border-radius:50%; display:grid; place-items:center; color:var(--ink-3); background:var(--surface-2); font-size:19px; line-height:1}
+.sheet-body{flex:1 1 auto; overflow-y:auto; overscroll-behavior:contain; padding:0 16px 30px}
+
+/* 詳細の写真 */
+.gallery{display:flex; gap:9px; overflow-x:auto; scrollbar-width:none; margin:14px -16px 0; padding-inline:16px}
+.gallery::-webkit-scrollbar{display:none}
+.gallery figure{flex:0 0 auto; width:min(88%, 420px); margin:0}
+.gallery.one figure{width:100%}
+.gallery img{width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:var(--r-m); border:1px solid var(--line); background:var(--surface-2)}
+.gallery figcaption{margin-top:6px; font-size:11.5px; color:var(--ink-3); line-height:1.55; letter-spacing:.03em}
+.gallery figcaption b{color:var(--ink-2); font-weight:500}
+.nophoto{
+  margin-top:14px; border:1px dashed var(--line); border-radius:var(--r-m); padding:22px 16px;
+  text-align:center; color:var(--ink-3); font-size:13.5px; line-height:1.7;
+  background:linear-gradient(150deg, var(--surface-2) 0%, var(--yamabuki-soft) 130%);
+}
+.nophoto .big{display:block; font-size:32px; color:var(--ai); margin-bottom:4px}
+
+.sec{margin-top:18px}
+.sec > h4{margin:0 0 9px; font-size:11.5px; letter-spacing:.18em; color:var(--ink-3); font-weight:700}
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-m); padding:14px 15px; box-shadow:var(--shadow-1)}
+.lead{margin:0; font-size:15.5px; line-height:1.85; color:var(--ink-2)}
+.caution{margin-top:10px; font-size:13.5px; line-height:1.7; color:var(--warn)}
+
+/* 外部リンク */
+.links{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-m); overflow:hidden; box-shadow:var(--shadow-1)}
+.links a{
+  display:flex; align-items:center; gap:11px; padding:14px 15px; text-decoration:none;
+  color:var(--ink); border-top:1px solid var(--line-soft); min-height:54px; font-size:15.5px;
+}
+.links a:first-child{border-top:none}
+.links a .ico{flex:0 0 auto; width:26px; text-align:center; font-size:18px}
+.links a .what{flex:1; min-width:0}
+.links a .what small{display:block; font-size:11.5px; color:var(--ink-3); letter-spacing:.03em; line-height:1.5}
+.links a .go{flex:0 0 auto; color:var(--ink-3); font-size:15px}
+
+dl.facts{margin:0; display:grid; grid-template-columns:auto 1fr}
+dl.facts dt{padding:10px 16px 10px 0; font-size:13px; color:var(--ink-3); letter-spacing:.05em; border-top:1px solid var(--line-soft); white-space:nowrap}
+dl.facts dd{margin:0; padding:10px 0; font-size:15px; border-top:1px solid var(--line-soft); text-align:right; line-height:1.6}
+dl.facts dt:first-of-type, dl.facts dd:first-of-type{border-top:none}
+dd .good{color:var(--ok); font-weight:700}
+dd .warnt{color:var(--warn); font-weight:700}
+
+.statusrow{display:grid; grid-template-columns:1fr 1fr 1fr; gap:7px}
+.statusbtn{border:1px solid var(--line); border-radius:var(--r-m); background:var(--surface); padding:11px 6px; font-size:12.5px; line-height:1.45; color:var(--ink-2); min-height:62px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px}
+.statusbtn strong{font-size:13.5px; font-weight:700; color:var(--ink)}
+.statusbtn[aria-pressed="true"]{background:var(--ok-soft); border-color:var(--ok); color:var(--ok)}
+.statusbtn[aria-pressed="true"] strong{color:var(--ok)}
+.statusbtn[data-v="0"][aria-pressed="true"]{background:var(--surface-2); border-color:var(--ink-3); color:var(--ink-2)}
+.statusbtn[data-v="0"][aria-pressed="true"] strong{color:var(--ink)}
+.statusnote{margin-top:9px; width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:var(--r-s); background:var(--surface-2); font-size:15px; min-height:44px}
+.statusmeta{margin-top:7px; font-size:11.5px; color:var(--ink-3); letter-spacing:.03em}
+
+details.ask{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-m); box-shadow:var(--shadow-1); overflow:hidden}
+details.ask summary{padding:14px 15px; font-size:15px; font-weight:700; cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:10px; color:var(--ai)}
+details.ask summary::-webkit-details-marker{display:none}
+details.ask summary::after{content:"＋"; color:var(--ink-3); font-weight:400}
+details.ask[open] summary::after{content:"−"}
+details.ask ol{margin:0; padding:0 17px 16px 34px; display:flex; flex-direction:column; gap:9px}
+details.ask li{font-size:14.5px; line-height:1.7; color:var(--ink-2)}
+details.ask li b{color:var(--ink); font-weight:700}
+
+.voice{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px}
+.voice li{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-m); padding:12px 14px; box-shadow:var(--shadow-1)}
+.voice .vtop{display:flex; align-items:center; gap:9px; flex-wrap:wrap}
+.voice .vname{font-size:13.5px; font-weight:700; letter-spacing:.03em}
+.voice .vdate{font-size:11.5px; color:var(--ink-3); margin-left:auto}
+.voice p{margin:7px 0 0; font-size:15px; line-height:1.75; white-space:pre-wrap; word-break:break-word}
+
+.rateset{display:flex; gap:4px; margin:2px 0 4px}
+.starbtn{width:46px; height:46px; display:grid; place-items:center; font-size:29px; line-height:1; color:var(--line); border-radius:var(--r-s); transition:color .1s, transform .1s}
+.starbtn[aria-pressed="true"]{color:var(--yamabuki)}
+.starbtn:active{transform:scale(.9)}
+.ratelabel{font-size:13px; color:var(--ink-3); min-height:22px; letter-spacing:.04em}
+.rateform textarea{width:100%; min-height:76px; margin-top:10px; padding:11px 13px; border:1px solid var(--line); border-radius:var(--r-m); background:var(--surface-2); font-size:16px; line-height:1.7; resize:vertical}
+.rateform .row{display:flex; gap:9px; align-items:center; margin-top:10px}
+.rateform .row .btn{flex:1}
+.saved{font-size:13px; color:var(--ok); font-weight:700}
+
+.syncbar{margin-top:22px; font-size:12px; color:var(--ink-3); text-align:center; letter-spacing:.04em; line-height:1.7}
+.syncbar .dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--mute); margin-right:5px; vertical-align:middle}
+.syncbar.on .dot{background:var(--ok)}
+
+footer.foot{margin-top:26px; padding-top:18px; border-top:1px solid var(--line-soft); font-size:12px; color:var(--ink-3); line-height:1.8}
+footer.foot details{margin-top:10px}
+footer.foot summary{cursor:pointer; color:var(--ai-2); font-size:12.5px}
+footer.foot ul{margin:9px 0 0; padding-left:1.1em; display:flex; flex-direction:column; gap:5px}
+footer.foot li{font-size:11.5px; line-height:1.6}
+</style>
+
+<header class="noren">
+  <div class="wrap">
+    <div class="mark" aria-hidden="true">♨</div>
+    <div>
+      <h1>湯めぐり帖</h1>
+      <p>レモンハウスから行きたい湯メモ</p>
+    </div>
+  </div>
+  <svg class="steam" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 16 L0 9 Q40 2 80 9 T160 9 T240 9 T320 9 T400 9 T480 9 T560 9 T640 9 L640 16 Z" fill="var(--ground)"></path>
+  </svg>
+</header>
+
+<main>
+  <section class="view wrap" id="view-find" role="tabpanel" aria-labelledby="tab-find">
+
+    <div class="striphead">
+      <h2>写真で見る</h2>
+      <span>よこにスクロール →</span>
+    </div>
+    <div class="strip" id="strip"></div>
+
+    <div class="notice">
+      <b>大事なこと：</b>厚生労働省と各都道府県は「ストーマ装具を正しく着けたままの入浴は衛生上問題ない」と通知を出しています。堂々と入って大丈夫です。ただし<b>実際の対応は施設ごとに違う</b>ので、この帖の情報は下調べです。行く前に電話で確かめて、結果をここに書き足してください。
+    </div>
+
+    <div class="whoami">
+      <label for="myname">この帖でのお名前</label>
+      <input id="myname" type="text" placeholder="例：としひこ" autocomplete="nickname" maxlength="12">
+    </div>
+
+    <div class="filters">
+      <div class="chiprow" role="group" aria-label="絞り込み">
+        <button class="chip" id="f-kashikiri" aria-pressed="false" type="button">貸切・個室風呂あり</button>
+        <button class="chip" id="f-flat" aria-pressed="false" type="button">坂・段差が少ない</button>
+        <button class="chip" id="f-day" aria-pressed="false" type="button">日帰りで行ける</button>
+        <button class="chip" id="f-photo" aria-pressed="false" type="button">写真あり</button>
+      </div>
+      <div class="chiprow" role="group" aria-label="並べ替えと距離">
+        <button class="chip sort" data-sort="dist" aria-pressed="true" type="button">近い順</button>
+        <button class="chip sort" data-sort="score" aria-pressed="false" type="button">評価の高い順</button>
+        <button class="chip" data-far="999" aria-pressed="true" type="button">距離すべて</button>
+        <button class="chip" data-far="30" aria-pressed="false" type="button">30km以内</button>
+        <button class="chip" data-far="60" aria-pressed="false" type="button">60km以内</button>
+        <button class="chip" data-far="120" aria-pressed="false" type="button">120km以内</button>
+      </div>
+    </div>
+
+    <p class="resultline"><span><b id="count">0</b> 件</span><span id="sortlabel">レモンハウスから近い順</span></p>
+    <ul class="list" id="list"></ul>
+
+    <p class="syncbar" id="syncbar"><span class="dot"></span><span id="syncmsg">この端末だけに保存しています</span></p>
+
+    <footer class="foot">
+      距離と所要時間は直線距離からのおおよその目安です。実際の道のりとは異なります。<br>
+      泉質・営業時間・料金・休館日は変わることがあります。お出かけ前に公式サイトか電話でご確認ください。
+      <details>
+        <summary>写真のクレジット（ウィキメディア・コモンズ）</summary>
+        <ul id="credits"></ul>
+      </details>
+    </footer>
+  </section>
+
+  <section class="view wrap" id="view-rank" role="tabpanel" aria-labelledby="tab-rank" hidden>
+    <div class="notice" style="background:var(--surface); color:var(--ink-2); border-color:var(--line)">
+      家族みんなの★を平均した、行きたい順です。まだ誰も点けていない湯は下に並びます。
+    </div>
+    <p class="resultline"><span id="ranklabel">みんなの評価順</span></p>
+    <ol class="rank" id="ranklist"></ol>
+  </section>
+
+  <section class="view wrap" id="view-cheer" role="tabpanel" aria-labelledby="tab-cheer" hidden>
+    <p class="cheer-intro">
+      入院中のお父さんへ、ひとこと。<br>
+      「この湯に一緒に行こう」でも、今日あったことでも。短くて大丈夫です。
+    </p>
+    <form class="cheerform" id="cheerform">
+      <textarea id="cheertext" placeholder="例：花和楽の湯、個室があるらしいよ。退院したらまず行こう。" maxlength="400"></textarea>
+      <button class="btn" type="submit" id="cheersend">ひとこと送る</button>
+    </form>
+    <ul class="cheers" id="cheerlist"></ul>
+  </section>
+</main>
+
+<nav class="tabbar" role="tablist" aria-label="画面切り替え">
+  <div class="wrap">
+    <button class="tab" id="tab-find" role="tab" aria-selected="true" aria-controls="view-find" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 17c1.6-1.4 3.2-1.4 4.8 0s3.2 1.4 4.8 0 3.2-1.4 4.8 0"/><path d="M4 21c1.6-1.4 3.2-1.4 4.8 0s3.2 1.4 4.8 0 3.2-1.4 4.8 0"/><path d="M8.5 11c-1.2-1.6-.4-3 .6-3.9 1.2-1.1 1-2.4.2-3.1"/><path d="M14.5 11c-1.2-1.6-.4-3 .6-3.9 1.2-1.1 1-2.4.2-3.1"/></svg>
+      さがす
+    </button>
+    <button class="tab" id="tab-rank" role="tab" aria-selected="false" aria-controls="view-rank" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.6l2.5 5.2 5.5.8-4 4 .95 5.7L12 16.6l-4.95 2.7L8 13.6l-4-4 5.5-.8z"/></svg>
+      行きたい順
+    </button>
+    <button class="tab" id="tab-cheer" role="tab" aria-selected="false" aria-controls="view-cheer" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M20 12.5c0 3.6-3.6 6.5-8 6.5-.9 0-1.8-.12-2.6-.35L4 20.5l1.3-3.4C4.5 16 4 14.3 4 12.5 4 8.9 7.6 6 12 6s8 2.9 8 6.5z"/></svg>
+      応援ボード
+    </button>
+  </div>
+</nav>
+
+<script>
+/* =======================================================================
+   Firebase 設定（ここを埋めると、家族全員で共有されます）
+   埋めるまでは、この端末の中だけに保存されます（アプリは普通に使えます）
+   ======================================================================= */
+var FIREBASE_CONFIG = {
+  // apiKey: "",
+  // authDomain: "",
+  // projectId: "",
+  // storageBucket: "",
+  // messagingSenderId: "",
+  // appId: ""
+};
+
+/* ===================== 出発地：レモンハウス（埼玉県鴻巣市） ===================== */
+var HOME = { name: "レモンハウス（鴻巣市）", lat: 36.0664, lng: 139.5153 };
+
+/* ===================== 写真のクレジット =====================
+   すべてウィキメディア・コモンズの自由ライセンス写真です。
+   ============================================================ */
+var CREDITS = {
+  "kusatsu.jpg":    { by:"Aspere", lic:"CC0", url:"https://commons.wikimedia.org/wiki/File:251130_Yubatake,_Kusatsu_12.jpg" },
+  "ikaho.jpg":      { by:"NMaia", lic:"CC BY-SA 4.0", url:"https://commons.wikimedia.org/wiki/File:Ikaho_Ishidan.jpg" },
+  "shima.jpg":      { by:"Wikimedia Commons 投稿者", lic:"CC BY-SA 3.0", url:"https://commons.wikimedia.org/wiki/File:Shima_Onsen_Gunma_01.jpg" },
+  "kinugawa.jpg":   { by:"Gene Jackson", lic:"CC BY-SA 2.0", url:"https://commons.wikimedia.org/wiki/File:Kinugawa_Onsen_01.jpg" },
+  "takaragawa.jpg": { by:"nobiinue", lic:"CC BY-SA 2.1 JP", url:"https://commons.wikimedia.org/wiki/File:Takaragawa_Onsen_01.jpg" },
+  "isobe.jpg":      { by:"Bakkai", lic:"CC BY 3.0", url:"https://commons.wikimedia.org/wiki/File:Isobe_spa_and_Usui_river.jpg" },
+  "isobemark.jpg":  { by:"Abasaa", lic:"パブリックドメイン", url:"https://commons.wikimedia.org/wiki/File:Birthplace_of_Onsen_Mark_monument.JPG" },
+  "shiobara.jpg":   { by:"Kitakyushuhamojiko", lic:"CC BY-SA 4.0", url:"https://commons.wikimedia.org/wiki/File:Shiobara-onsen.jpg" },
+  "shinrin.jpg":    { by:"pcs34560", lic:"パブリックドメイン", url:"https://commons.wikimedia.org/wiki/File:The_National_Musashi_Kyuryo_Forest_Park.JPG" },
+  "chichibu.jpg":   { by:"Guilhem Vellut", lic:"CC BY 2.0", url:"https://commons.wikimedia.org/wiki/File:Nagatoro_Iwadatami_Rocks_(11043349565).jpg" }
+};
+
+/* ===================== 候補の湯 =====================
+   kashikiri: yes=貸切/個室/客室風呂あり  unknown=要確認
+   terrain:   flat=ほぼ平坦  mild=多少の坂や段差  hilly=坂・階段が多い
+   stay:      day=日帰り  stay=泊まり  both=どちらも
+   photos:    ウィキメディア・コモンズの写真（cap＝何の写真か）
+   wiki:      日本語ウィキペディアの記事名（存在を確認済みのものだけ）
+   ================================================== */
+var SPOTS = [
+  { id:"kitamoto", name:"北本温泉 湯楽の里", area:"埼玉県北本市", lat:36.0277, lng:139.5203,
+    stay:"day", kashikiri:"unknown", terrain:"flat", spring:"ナトリウム-塩化物泉",
+    why:"レモンハウスのすぐ隣、いちばん近い湯。まず一回、湯に浸かる感覚を取り戻すならここ。露天が広く、平屋づくりで館内の移動もらく。" },
+
+  { id:"gyoda", name:"行田・湯本天然温泉 茂美の湯", area:"埼玉県行田市", lat:36.1390, lng:139.4870,
+    stay:"day", kashikiri:"unknown", terrain:"flat", spring:"ナトリウム-塩化物泉", wiki:"行田市",
+    why:"田園のなかの平屋づくり。混む時間を外せば脱衣所もゆったり使えます。" },
+
+  { id:"ageo", name:"上尾天然温泉 小春日和", area:"埼玉県上尾市", lat:35.9750, lng:139.5900,
+    stay:"day", kashikiri:"unknown", terrain:"flat", spring:"ナトリウム-塩化物泉",
+    why:"南へすこし。駐車場から玄関まで段差が少なく、館内も一階でまとまっています。" },
+
+  { id:"kumagaya", name:"おふろcafé ハレニワの湯", area:"埼玉県熊谷市", lat:36.1470, lng:139.3890,
+    stay:"day", kashikiri:"unknown", terrain:"flat", spring:"人工温泉・炭酸泉ほか",
+    why:"湯だけでなく、館内着で本を読んだりごろごろできる場所。長居しても疲れにくいので、退院直後の「まず外出してみる」一歩目に向いています。" },
+
+  { id:"hyakukannon", name:"百観音温泉", area:"埼玉県久喜市", lat:36.0990, lng:139.6520,
+    stay:"day", kashikiri:"unknown", terrain:"flat", spring:"ナトリウム-塩化物強塩温泉（源泉かけ流し）", wiki:"百観音温泉",
+    why:"関東でも指折りの濃い源泉。1回の入浴で体がよく温まります。長湯はせず、短めに区切って何度か入るのがおすすめ。" },
+
+  { id:"sugito", name:"杉戸天然温泉 雅楽の湯", area:"埼玉県杉戸町", lat:36.0280, lng:139.7350,
+    stay:"day", kashikiri:"unknown", terrain:"flat", spring:"ナトリウム-塩化物泉（源泉かけ流し）",
+    why:"広くて新しく、休憩処が充実。段差が少ない設計で、ゆっくり過ごせます。" },
+
+  { id:"seiganji", name:"さいたま清河寺温泉", area:"さいたま市西区", lat:35.9090, lng:139.5780,
+    stay:"day", kashikiri:"unknown", terrain:"flat", spring:"ナトリウム-塩化物泉（源泉かけ流し）",
+    why:"市街地にありながら本格的な源泉。帰りに買い物も済ませられる気軽さ。" },
+
+  { id:"morinoyu", name:"しんとこ温泉 森林の湯", area:"埼玉県滑川町", lat:36.0620, lng:139.3750,
+    stay:"day", kashikiri:"unknown", terrain:"mild", spring:"ナトリウム-塩化物泉",
+    photos:[{f:"shinrin.jpg", cap:"となりの国営武蔵丘陵森林公園"}],
+    why:"森林公園のそば。緑を見ながら入れます。館内に多少の段差があるので、手すりの位置を電話で聞いておくと安心。" },
+
+  { id:"karaku", name:"おがわ温泉 花和楽の湯", area:"埼玉県小川町", lat:36.0580, lng:139.2670,
+    stay:"day", kashikiri:"yes", terrain:"mild", spring:"アルカリ性単純温泉（源泉かけ流し）", wiki:"小川町",
+    why:"個室・貸切の湯があり、人目を気にせず入れます。お父さんの一湯目として、この帖のいちばんの本命。お母さんも一緒の個室なら、介助も気兼ねいりません。",
+    caution:"敷地内に階段や坂道があります。貸切棟までの行き方を電話で確認しておくと安心です。" },
+
+  { id:"tamagawa", name:"都幾川温泉 旅館とき川・玉川温泉", area:"埼玉県ときがわ町", lat:36.0100, lng:139.2570,
+    stay:"both", kashikiri:"unknown", terrain:"mild", spring:"アルカリ性単純硫黄温泉", wiki:"玉川温泉 (埼玉県)",
+    why:"とろりとしたやわらかい湯。静かで、人が少ない時間帯を選びやすい規模です。" },
+
+  { id:"kanna", name:"かんなの湯", area:"埼玉県神川町", lat:36.1830, lng:139.1150,
+    stay:"day", kashikiri:"yes", terrain:"flat", spring:"ナトリウム-塩化物泉", wiki:"神川町",
+    why:"家族風呂・個室プランがあります。広い平屋で、駐車場から近いのも助かるところ。" },
+
+  { id:"hakuju", name:"白寿の湯（神川温泉）", area:"埼玉県神川町", lat:36.1860, lng:139.1060,
+    stay:"day", kashikiri:"unknown", terrain:"flat", spring:"ナトリウム-塩化物強塩泉（源泉かけ流し）",
+    why:"濃い黄土色の、見るからに効きそうな湯。浴槽のふちに温泉成分が積もっています。短めの入浴を数回に分けて。" },
+
+  { id:"seine", name:"秩父温泉 星音の湯", area:"埼玉県小鹿野町", lat:36.0260, lng:139.0550,
+    stay:"both", kashikiri:"yes", terrain:"mild", spring:"アルカリ性単純温泉", wiki:"秩父温泉",
+    why:"貸切風呂と、静かな離れの宿があります。秩父のなかでは比較的なだらかな場所。泊まりの第一歩にちょうどいい距離感。" },
+
+  { id:"manganji", name:"秩父川端温泉 梵の湯／満願の湯", area:"埼玉県皆野町", lat:36.0370, lng:139.0960,
+    stay:"day", kashikiri:"unknown", terrain:"hilly", spring:"アルカリ性単純硫黄泉",
+    photos:[{f:"chichibu.jpg", cap:"秩父・長瀞の岩畳（このあたりの渓谷の風景）"}],
+    why:"渓谷の音を聞きながら入る露天が気持ちいい湯。景色はいちばん。",
+    caution:"川沿いの傾斜地にあり、浴室まで階段があります。お母さんの膝には負担かもしれません。" },
+
+  { id:"isobe", name:"磯部温泉", area:"群馬県安中市", lat:36.3120, lng:138.9130,
+    stay:"both", kashikiri:"unknown", terrain:"flat", spring:"ナトリウム-塩化物・炭酸水素塩泉", wiki:"磯部温泉",
+    photos:[{f:"isobe.jpg", cap:"磯部温泉と碓氷川"}, {f:"isobemark.jpg", cap:"温泉記号「♨」発祥の地の碑"}],
+    why:"地図の温泉記号「♨」発祥の地とされる温泉。碓氷川沿いの平らな町で、坂がほとんどありません。宿の数もほどよく、泊まりの練習にちょうどいい規模。" },
+
+  { id:"ikaho", name:"伊香保温泉", area:"群馬県渋川市", lat:36.4890, lng:138.9170,
+    stay:"stay", kashikiri:"unknown", terrain:"hilly", spring:"硫酸塩泉（黄金の湯）・メタけい酸泉（白銀の湯）", wiki:"伊香保温泉",
+    photos:[{f:"ikaho.jpg", cap:"名物の石段街。365段あります"}],
+    why:"茶褐色の「黄金の湯」は体がよく温まります。宿によってはエレベーター完備で館内がほぼ平らなところも。",
+    caution:"写真の石段街は365段の急な階段です。石段を歩かず、宿の湯だけを楽しむ計画にしてください。宿選びのときは必ず「玄関から浴場まで階段があるか」を聞いてください。" },
+
+  { id:"shima", name:"四万温泉", area:"群馬県中之条町", lat:36.6410, lng:138.7350,
+    stay:"stay", kashikiri:"unknown", terrain:"hilly", spring:"ナトリウム・カルシウム-塩化物硫酸塩泉", wiki:"四万温泉",
+    photos:[{f:"shima.jpg", cap:"四万温泉の温泉街"}],
+    why:"「四万の病を治す」と言い伝えられる湯。飲泉もできる静かな渓谷の温泉地で、人が多すぎないのがいいところ。",
+    caution:"温泉街が川沿いの斜面に細長く伸びています。宿から一歩も出ない前提で選ぶのが無難です。" },
+
+  { id:"kusatsu", name:"草津温泉", area:"群馬県草津町", lat:36.6220, lng:138.5960,
+    stay:"stay", kashikiri:"unknown", terrain:"hilly", spring:"酸性・含硫黄-アルミニウム-硫酸塩塩化物温泉", wiki:"草津温泉",
+    photos:[{f:"kusatsu.jpg", cap:"草津温泉のシンボル、湯畑"}],
+    why:"日本を代表する湯。強い酸性で殺菌力が高く、湯畑まわりの景色は一度は見る価値があります。",
+    caution:"強い酸性のため、肌やストーマ周囲に刺激があるかもしれません。手術後に行くなら主治医に一度相談を。町全体が坂です。" },
+
+  { id:"kinugawa", name:"鬼怒川温泉", area:"栃木県日光市", lat:36.8220, lng:139.7140,
+    stay:"stay", kashikiri:"unknown", terrain:"mild", spring:"アルカリ性単純温泉", wiki:"鬼怒川温泉",
+    photos:[{f:"kinugawa.jpg", cap:"鬼怒川の渓谷と温泉街"}],
+    why:"やわらかい単純泉で刺激が少なく、体に負担をかけにくい湯。大きな宿が多く、エレベーターやバリアフリー客室が選びやすいのが利点です。" },
+
+  { id:"shiobara", name:"塩原温泉郷", area:"栃木県那須塩原市", lat:36.9840, lng:139.7920,
+    stay:"stay", kashikiri:"unknown", terrain:"hilly", spring:"泉質が11種類ある温泉郷", wiki:"塩原温泉郷",
+    photos:[{f:"shiobara.jpg", cap:"塩原温泉郷"}],
+    why:"ひとつの温泉郷のなかに泉質がいくつもあり、宿ごとに湯が違うのが楽しいところ。",
+    caution:"渓谷沿いの山あいです。宿の立地と、駐車場から玄関までの高低差を確認してください。" },
+
+  { id:"minakami", name:"宝川温泉・水上温泉郷", area:"群馬県みなかみ町", lat:36.8300, lng:138.9600,
+    stay:"stay", kashikiri:"unknown", terrain:"hilly", spring:"単純温泉", wiki:"水上温泉郷",
+    photos:[{f:"takaragawa.jpg", cap:"宝川温泉の川沿いの露天風呂"}],
+    why:"川沿いの巨大な露天風呂で知られる、日本屈指の絶景の湯。写真のとおり、一度は見てみたい景色です。",
+    caution:"山奥で、露天までの道のりに段差と距離があります。お母さんの膝を考えると、今回は「いつかの目標」として置いておく湯かもしれません。" },
+
+  { id:"mikazuki", name:"龍宮城スパ・ホテル三日月", area:"千葉県木更津市", lat:35.3950, lng:139.9170,
+    stay:"both", kashikiri:"yes", terrain:"flat", spring:"ナトリウム-塩化物強塩泉",
+    why:"オストメイトの方に対応している施設として旅行会社の特集で紹介されている、数少ない大型宿です。海沿いの平らな土地で、館内はエレベーターで移動できます。客室の風呂や貸切の選択肢もあり、迷ったときの「確実な一手」。" }
+];
+
+/* ===================== 電話で聞くこと ===================== */
+var ASK_LIST = [
+  "<b>人工膀胱（ストーマ）の装具をつけたまま、大浴場に入れますか。</b>他のお客様への案内はどうされていますか。",
+  "<b>貸切風呂・家族風呂・客室のお風呂はありますか。</b>予約は必要ですか。何分単位で、料金はいくらですか。",
+  "<b>脱衣所から浴槽まで、段差や階段はいくつありますか。</b>手すりはついていますか。",
+  "<b>駐車場から玄関まで、坂や階段はありますか。</b>玄関の近くに停められますか。",
+  "<b>オストメイト対応トイレ（多機能トイレ）はありますか。</b>場所は浴場から近いですか。",
+  "<b>脱衣所に、荷物を置いて座れる椅子やベンチはありますか。</b>",
+  "泊まる場合：<b>ベッドの部屋はありますか。</b>部屋から浴場まで、エレベーターで行けますか。"
+];
+
+/* ===================== 小道具 ===================== */
+var $ = function(s, r){ return (r||document).querySelector(s); };
+var $$ = function(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function q(s){ return encodeURIComponent(s); }
+
+function distanceKm(a, b){
+  var R = 6371, toRad = Math.PI/180;
+  var dLat = (b.lat-a.lat)*toRad, dLng = (b.lng-a.lng)*toRad;
+  var la1 = a.lat*toRad, la2 = b.lat*toRad;
+  var h = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(la1)*Math.cos(la2)*Math.sin(dLng/2)*Math.sin(dLng/2);
+  return 2*R*Math.asin(Math.min(1, Math.sqrt(h)));
+}
+function driveMin(km){
+  var d = km * 1.3;
+  var m = (Math.min(d,20)/30 + Math.max(0,d-20)/55) * 60;
+  return Math.max(10, Math.round(m/5)*5);
+}
+function fmtMin(m){ return m >= 60 ? Math.floor(m/60)+"時間"+(m%60?m%60+"分":"") : m+"分"; }
+function fmtDate(ts){ if(!ts) return ""; var d = new Date(ts); return (d.getMonth()+1)+"月"+d.getDate()+"日"; }
+function starHtml(n){ var h=""; for(var i=1;i<=5;i++){ h += i<=n ? "★" : '<span class="off">★</span>'; } return h; }
+
+var TERRAIN = { flat:{label:"ほぼ平坦",cls:"b-ok"}, mild:{label:"多少の坂・段差",cls:""}, hilly:{label:"坂・階段が多い",cls:"b-warn"} };
+var STAYLABEL = { day:"日帰り", stay:"泊まり", both:"日帰り・泊まり" };
+var STATUS = [ {v:0,t:"未確認",sub:"まだ聞いていない"}, {v:1,t:"電話でOK",sub:"確認が取れた"}, {v:2,t:"実際に入れた",sub:"行ってきた"} ];
+var RATE_WORD = ["", "いつか行けたら", "気になる", "行ってみたい", "かなり行きたい", "ぜひここに行きたい"];
+
+SPOTS.forEach(function(s){
+  s.km = distanceKm(HOME, s);
+  s.min = driveMin(s.km);
+  s.photos = s.photos || [];
+});
+
+/* ===================== 外部リンク ===================== */
+function linksFor(s){
+  var name = s.name.replace(/／.*$/, "");
+  var L = [
+    { ico:"📷", t:"写真をもっと見る", sub:"Google 画像検索で、施設の様子を見る",
+      href:"https://www.google.com/search?tbm=isch&q=" + q(name + " " + s.area) },
+    { ico:"🗺", t:"地図・行き方を見る", sub:"Google マップ（レモンハウスから約 " + s.km.toFixed(0) + "km）",
+      href:"https://www.google.com/maps/search/?api=1&query=" + q(name + " " + s.area) }
+  ];
+  if(s.wiki){
+    L.push({ ico:"📖", t:"ウィキペディアで読む", sub:"「" + s.wiki + "」 — 泉質や歴史のくわしい説明",
+      href:"https://ja.wikipedia.org/wiki/" + q(s.wiki) });
+  }
+  L.push({ ico:"🔍", t:"公式サイト・料金を調べる", sub:"Google 検索（営業時間や休館日はここで）",
+    href:"https://www.google.com/search?q=" + q(name + " " + s.area + " 公式 料金 営業時間") });
+  return L;
+}
+
+/* ===================== 保存層 ===================== */
+var Store = (function(){
+  var LS = "yumeguri.v1";
+  var data = { ratings:{}, checks:{}, cheers:{} };
+  var online = false, fs = null, onChange = function(){};
+
+  function readLocal(){
+    try{ var raw = localStorage.getItem(LS);
+      if(raw){ var p = JSON.parse(raw); data.ratings = p.ratings||{}; data.checks = p.checks||{}; data.cheers = p.cheers||{}; }
+    }catch(e){}
+  }
+  function writeLocal(){ try{ localStorage.setItem(LS, JSON.stringify(data)); }catch(e){} }
+  function loadScript(src){
+    return new Promise(function(res, rej){
+      var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s);
+    });
+  }
+  function watch(col, bucket){
+    fs.collection(col).onSnapshot(function(snap){
+      var next = {}; snap.forEach(function(d){ next[d.id] = d.data(); });
+      data[bucket] = next; writeLocal(); onChange();
+    }, function(){});
+  }
+
+  return {
+    get data(){ return data; },
+    get online(){ return online; },
+    init: function(cb){
+      onChange = cb || onChange;
+      readLocal(); cb && cb();
+      if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.projectId) return Promise.resolve(false);
+      var base = "https://www.gstatic.com/firebasejs/10.12.5/";
+      return loadScript(base+"firebase-app-compat.js")
+        .then(function(){ return loadScript(base+"firebase-firestore-compat.js"); })
+        .then(function(){
+          firebase.initializeApp(FIREBASE_CONFIG);
+          fs = firebase.firestore();
+          watch("yumeguri_ratings","ratings"); watch("yumeguri_checks","checks"); watch("yumeguri_cheers","cheers");
+          online = true; cb && cb(); return true;
+        })
+        .catch(function(){ online = false; cb && cb(); return false; });
+    },
+    put: function(bucket, col, id, body){
+      data[bucket][id] = body; writeLocal(); onChange();
+      if(fs){ fs.collection(col).doc(id).set(body).catch(function(){}); }
+    },
+    remove: function(bucket, col, id){
+      delete data[bucket][id]; writeLocal(); onChange();
+      if(fs){ fs.collection(col).doc(id).delete().catch(function(){}); }
+    }
+  };
+})();
+
+function clientId(){
+  var k = "yumeguri.cid", v = null;
+  try{ v = localStorage.getItem(k); }catch(e){}
+  if(!v){ v = "c" + Math.random().toString(36).slice(2,10) + Date.now().toString(36).slice(-4);
+    try{ localStorage.setItem(k, v); }catch(e){} }
+  return v;
+}
+var CID = clientId();
+function myName(){ try{ return localStorage.getItem("yumeguri.name") || ""; }catch(e){ return ""; } }
+function setMyName(v){ try{ localStorage.setItem("yumeguri.name", v); }catch(e){} }
+
+function ratingsFor(id){
+  var out = [], r = Store.data.ratings;
+  for(var k in r){ if(r[k] && r[k].spotId === id) out.push(r[k]); }
+  out.sort(function(a,b){ return (b.at||0)-(a.at||0); });
+  return out;
+}
+function avgFor(id){
+  var rs = ratingsFor(id); if(!rs.length) return null;
+  return { avg: rs.reduce(function(a,r){ return a+(r.stars||0); },0)/rs.length, n: rs.length };
+}
+function checkFor(id){ return Store.data.checks[id] || null; }
+function myRating(id){ return Store.data.ratings[id + "__" + CID] || null; }
+
+/* ===================== 画面の状態 ===================== */
+var UI = { fKashikiri:false, fFlat:false, fDay:false, fPhoto:false, sort:"dist", far:999, openId:null, draftStars:0 };
+
+function filtered(){
+  return SPOTS.filter(function(s){
+    if(UI.fKashikiri && s.kashikiri !== "yes") return false;
+    if(UI.fFlat && s.terrain === "hilly") return false;
+    if(UI.fDay && s.stay === "stay") return false;
+    if(UI.fPhoto && !s.photos.length) return false;
+    if(s.km > UI.far) return false;
+    return true;
+  }).sort(function(a,b){
+    if(UI.sort === "score"){
+      var aa = avgFor(a.id), bb = avgFor(b.id);
+      var av = aa ? aa.avg : -1, bv = bb ? bb.avg : -1;
+      if(bv !== av) return bv - av;
+    }
+    return a.km - b.km;
+  });
+}
+
+function thumbHtml(s){
+  if(s.photos.length){
+    return '<span class="thumb"><img src="img/'+s.photos[0].f+'" alt="'+esc(s.photos[0].cap)+'" loading="lazy"></span>';
+  }
+  return '<span class="thumb none" aria-hidden="true">♨</span>';
+}
+
+function badgesHtml(s){
+  var h = "";
+  if(s.kashikiri === "yes") h += '<span class="badge b-ok">貸切・個室風呂あり</span>';
+  h += '<span class="badge '+TERRAIN[s.terrain].cls+'">'+TERRAIN[s.terrain].label+'</span>';
+  h += '<span class="badge'+(s.stay==="stay"?" b-stay":"")+'">'+STAYLABEL[s.stay]+'</span>';
+  var c = checkFor(s.id);
+  if(c && c.status === 2) h += '<span class="badge b-ok">入ってきた</span>';
+  else if(c && c.status === 1) h += '<span class="badge b-ok">電話で確認ずみ</span>';
+  return h;
+}
+
+function renderStrip(){
+  var withPhoto = SPOTS.filter(function(s){ return s.photos.length; })
+                       .sort(function(a,b){ return a.km - b.km; });
+  $("#strip").innerHTML = withPhoto.map(function(s){
+    return '<button class="shot" type="button" data-open="'+s.id+'">'
+      + '<img src="img/'+s.photos[0].f+'" alt="'+esc(s.photos[0].cap)+'" loading="lazy">'
+      + '<span class="veil"><b>'+esc(s.name)+'</b>'
+      +   '<small>'+esc(s.area)+' ・ 約'+s.km.toFixed(0)+'km ・ 車 約'+fmtMin(s.min)+'</small>'
+      +   '<i>📷 '+esc(s.photos[0].cap)+'</i></span>'
+      + '</button>';
+  }).join("");
+}
+
+function cardHtml(s){
+  var a = avgFor(s.id);
+  var cls = "card" + (s.kashikiri === "yes" ? " kashikiri" : (s.terrain === "mild" ? " mild" : ""));
+  return '<li><button class="'+cls+'" type="button" data-open="'+s.id+'">'
+    + '<span class="card-top">'
+    +   thumbHtml(s)
+    +   '<span style="min-width:0; flex:1">'
+    +     '<h3>'+esc(s.name)+'</h3>'
+    +     '<p class="area">'+esc(s.area)+'</p>'
+    +     '<p class="far">約'+s.km.toFixed(0)+'km <span>／ 車 約'+fmtMin(s.min)+'</span></p>'
+    +   '</span>'
+    + '</span>'
+    + '<span class="badges">'+badgesHtml(s)+'</span>'
+    + '<span class="card-foot">'
+    +   (a ? '<span class="stars">'+starHtml(Math.round(a.avg))+'</span><span class="avg">'+a.avg.toFixed(1)+'</span><span class="cnt">'+a.n+'人が評価</span>'
+          : '<span class="stars">'+starHtml(0)+'</span><span class="cnt">まだ誰も評価していません</span>')
+    + '</span>'
+    + '</button></li>';
+}
+
+function renderList(){
+  var rows = filtered();
+  $("#count").textContent = rows.length;
+  $("#sortlabel").textContent = UI.sort === "score" ? "みんなの評価が高い順" : "レモンハウスから近い順";
+  $("#list").innerHTML = rows.length
+    ? rows.map(cardHtml).join("")
+    : '<li class="empty">条件に合う湯がありませんでした。<br>絞り込みをひとつ外してみてください。</li>';
+}
+
+function renderRank(){
+  var rows = SPOTS.slice().map(function(s){
+    var a = avgFor(s.id);
+    return { s:s, avg: a ? a.avg : -1, n: a ? a.n : 0 };
+  }).sort(function(x,y){ return y.avg !== x.avg ? y.avg - x.avg : x.s.km - y.s.km; });
+
+  $("#ranklist").innerHTML = rows.map(function(r, i){
+    var s = r.s, cls = "card" + (s.kashikiri === "yes" ? " kashikiri" : "");
+    return '<li><button class="'+cls+'" type="button" data-open="'+s.id+'">'
+      + '<span class="rank-no">'+(i+1)+'</span>'
+      + thumbHtml(s)
+      + '<span class="rank-body"><h3>'+esc(s.name)+'</h3>'
+      +   '<p class="area">'+esc(s.area)+' ・ 約'+s.km.toFixed(0)+'km</p>'
+      +   '<span class="card-foot" style="border:none; padding-top:6px; margin-top:3px">'
+      +     (r.n ? '<span class="stars">'+starHtml(Math.round(r.avg))+'</span><span class="avg">'+r.avg.toFixed(1)+'</span><span class="cnt">'+r.n+'人</span>'
+                 : '<span class="cnt" style="margin-left:0">まだ評価がありません</span>')
+      +   '</span>'
+      + '</span></button></li>';
+  }).join("");
+}
+
+function renderCheers(){
+  var list = [];
+  for(var k in Store.data.cheers){ var c = Store.data.cheers[k]; if(c) list.push(c); }
+  list.sort(function(a,b){ return (b.at||0)-(a.at||0); });
+  $("#cheerlist").innerHTML = list.length
+    ? list.map(function(c){ return '<li><p>'+esc(c.text)+'</p><p class="meta">'+esc(c.name||"名前なし")+' ・ '+fmtDate(c.at)+'</p></li>'; }).join("")
+    : '<li class="empty" style="font-family:var(--body)">まだひとこともありません。<br>最初のひとことを書いてみてください。</li>';
+}
+
+function renderCredits(){
+  var used = {};
+  SPOTS.forEach(function(s){ s.photos.forEach(function(p){ used[p.f] = true; }); });
+  $("#credits").innerHTML = Object.keys(used).map(function(f){
+    var c = CREDITS[f]; if(!c) return "";
+    return '<li>'+esc(f)+' — 撮影 '+esc(c.by)+'／'+esc(c.lic)+' — <a href="'+c.url+'" target="_blank" rel="noopener">出典</a></li>';
+  }).join("");
+}
+
+function renderSync(){
+  var bar = $("#syncbar");
+  bar.classList.toggle("on", Store.online);
+  $("#syncmsg").textContent = Store.online ? "家族みんなで共有中です" : "この端末だけに保存しています（共有の設定はまだです）";
+}
+
+function renderAll(){
+  renderList(); renderRank(); renderCheers(); renderSync();
+  if(UI.openId) renderSheet();
+}
+
+/* ===================== 詳細シート ===================== */
+function sheetHtml(s){
+  var c = checkFor(s.id) || { status:0, note:"", by:"", at:0 };
+  var mine = myRating(s.id);
+  var stars = UI.draftStars || (mine ? mine.stars : 0);
+  var voices = ratingsFor(s.id);
+
+  var photoBlock = s.photos.length
+    ? '<div class="gallery'+(s.photos.length===1?" one":"")+'">'
+      + s.photos.map(function(p){
+          var cr = CREDITS[p.f] || {};
+          return '<figure><img src="img/'+p.f+'" alt="'+esc(p.cap)+'" loading="lazy">'
+            + '<figcaption><b>'+esc(p.cap)+'</b><br>撮影 '+esc(cr.by||"—")+'／'+esc(cr.lic||"—")+'（ウィキメディア・コモンズ）</figcaption></figure>';
+        }).join("")
+      + '</div>'
+    : '<div class="nophoto"><span class="big">♨</span>自由に使える写真が見つからなかった施設です。<br>下の「写真をもっと見る」から、実際の様子を見られます。</div>';
+
+  var kashiText = s.kashikiri === "yes"
+    ? '<span class="good">あり</span>（人目を気にせず入れます）'
+    : '要確認 <span style="color:var(--ink-3); font-size:13px">— 電話で聞いてみてください</span>';
+  var terrText = s.terrain === "hilly" ? '<span class="warnt">'+TERRAIN[s.terrain].label+'</span>'
+    : (s.terrain === "flat" ? '<span class="good">'+TERRAIN[s.terrain].label+'</span>' : TERRAIN[s.terrain].label);
+
+  return ''
+  + '<div class="sheet-head"><div class="grip"></div>'
+  +   '<div style="flex:1; min-width:0"><h2>'+esc(s.name)+'</h2><p class="area">'+esc(s.area)+' ・ レモンハウスから 約'+s.km.toFixed(0)+'km ・ 車 約'+fmtMin(s.min)+'（目安）</p></div>'
+  +   '<button class="closex" type="button" id="sheetclose" aria-label="閉じる">✕</button>'
+  + '</div>'
+  + '<div class="sheet-body">'
+
+  +   photoBlock
+
+  +   '<div class="sec"><div class="panel">'
+  +     '<p class="lead">'+esc(s.why)+'</p>'
+  +     (s.caution ? '<p class="caution">⚠ '+esc(s.caution)+'</p>' : '')
+  +   '</div></div>'
+
+  +   '<div class="sec"><h4>もっと見る・調べる</h4><div class="links">'
+  +     linksFor(s).map(function(l){
+          return '<a href="'+l.href+'" target="_blank" rel="noopener">'
+            + '<span class="ico" aria-hidden="true">'+l.ico+'</span>'
+            + '<span class="what">'+esc(l.t)+'<small>'+esc(l.sub)+'</small></span>'
+            + '<span class="go" aria-hidden="true">›</span></a>';
+        }).join("")
+  +   '</div></div>'
+
+  +   '<div class="sec"><h4>この湯のこと</h4><div class="panel"><dl class="facts">'
+  +     '<dt>貸切・個室の風呂</dt><dd>'+kashiText+'</dd>'
+  +     '<dt>坂・段差</dt><dd>'+terrText+'</dd>'
+  +     '<dt>行き方</dt><dd>'+STAYLABEL[s.stay]+'</dd>'
+  +     '<dt>泉質</dt><dd style="font-size:14px">'+esc(s.spring)+'</dd>'
+  +     '<dt>レモンハウスから</dt><dd>直線 約'+s.km.toFixed(0)+'km ／ 車 約'+fmtMin(s.min)+'</dd>'
+  +   '</dl></div></div>'
+
+  +   '<div class="sec"><h4>ストーマの受け入れ 確認ぐあい</h4><div class="panel">'
+  +     '<div class="statusrow">'
+  +       STATUS.map(function(st){
+            return '<button class="statusbtn" type="button" data-status="'+st.v+'" data-v="'+st.v+'" aria-pressed="'+(c.status===st.v)+'">'
+              + '<strong>'+st.t+'</strong><span>'+st.sub+'</span></button>';
+          }).join("")
+  +     '</div>'
+  +     '<input class="statusnote" id="statusnote" type="text" maxlength="120" placeholder="聞いた内容のメモ（例：貸切50分2,000円、段差なし）" value="'+esc(c.note||"")+'">'
+  +     (c.at ? '<p class="statusmeta">'+esc(c.by||"だれか")+' が '+fmtDate(c.at)+' に更新</p>' : '')
+  +   '</div></div>'
+
+  +   '<div class="sec"><h4>電話で聞くこと</h4>'
+  +     '<details class="ask"><summary>そのまま読める、質問のリスト</summary><ol>'
+  +       ASK_LIST.map(function(x){ return '<li>'+x+'</li>'; }).join("")
+  +     '</ol></details></div>'
+
+  +   '<div class="sec"><h4>あなたの気持ち</h4><div class="panel rateform">'
+  +     '<div class="rateset" role="group" aria-label="行きたい度">'
+  +       [1,2,3,4,5].map(function(i){
+            return '<button class="starbtn" type="button" data-star="'+i+'" aria-pressed="'+(i<=stars)+'" aria-label="'+i+'点">★</button>';
+          }).join("")
+  +     '</div>'
+  +     '<p class="ratelabel" id="ratelabel">'+(stars ? RATE_WORD[stars] : "★を押して、行きたい度をつけてください")+'</p>'
+  +     '<textarea id="ratecomment" maxlength="300" placeholder="ひとこと（例：ここなら個室があるから安心そう）">'+esc(mine ? (mine.comment||"") : "")+'</textarea>'
+  +     '<div class="row"><button class="btn" type="button" id="ratesave">この評価を残す</button>'
+  +       (mine ? '<button class="btn btn-ghost" type="button" id="ratedel" style="flex:0 0 auto; padding:0 14px">消す</button>' : '')
+  +     '</div>'
+  +     '<p class="ratelabel" id="ratesaved" style="margin-top:8px"></p>'
+  +   '</div></div>'
+
+  +   '<div class="sec"><h4>家族の声（'+voices.length+'）</h4>'
+  +     (voices.length
+        ? '<ul class="voice">' + voices.map(function(v){
+            return '<li><div class="vtop"><span class="vname">'+esc(v.name||"名前なし")+'</span>'
+              + '<span class="stars">'+starHtml(v.stars)+'</span>'
+              + '<span class="vdate">'+fmtDate(v.at)+'</span></div>'
+              + (v.comment ? '<p>'+esc(v.comment)+'</p>' : '') + '</li>';
+          }).join("") + '</ul>'
+        : '<div class="empty">まだ誰も書いていません。<br>いちばんに書いてみてください。</div>')
+  +   '</div>'
+  + '</div>';
+}
+
+function renderSheet(){
+  var sheet = $("#sheet"); if(!sheet) return;
+  var s = SPOTS.filter(function(x){ return x.id === UI.openId; })[0]; if(!s) return;
+  var body = $(".sheet-body", sheet), keep = body ? body.scrollTop : 0;
+  sheet.innerHTML = sheetHtml(s);
+  var nb = $(".sheet-body", sheet); if(nb && keep) nb.scrollTop = keep;
+}
+function openSheet(id){
+  UI.openId = id; UI.draftStars = 0;
+  var scrim = document.createElement("div"); scrim.className = "scrim"; scrim.id = "scrim";
+  var sheet = document.createElement("div"); sheet.className = "sheet"; sheet.id = "sheet";
+  sheet.setAttribute("role","dialog"); sheet.setAttribute("aria-modal","true");
+  document.body.appendChild(scrim); document.body.appendChild(sheet);
+  document.body.style.overflow = "hidden";
+  renderSheet();
+  var x = $("#sheetclose"); if(x) x.focus();
+}
+function closeSheet(){
+  UI.openId = null; UI.draftStars = 0;
+  var a = $("#scrim"), b = $("#sheet"); if(a) a.remove(); if(b) b.remove();
+  document.body.style.overflow = "";
+}
+
+/* ===================== 操作 ===================== */
+document.addEventListener("click", function(e){
+  var t = e.target;
+  if(!t.closest) return;
+  if(t.closest("a")) return;
+
+  var openBtn = t.closest("[data-open]");
+  if(openBtn){ openSheet(openBtn.getAttribute("data-open")); return; }
+  if(t.closest("#scrim") || t.closest("#sheetclose")){ closeSheet(); return; }
+
+  var tab = t.closest(".tab");
+  if(tab){
+    $$(".tab").forEach(function(b){ b.setAttribute("aria-selected", String(b === tab)); });
+    $$(".view").forEach(function(v){ v.hidden = v.id !== tab.getAttribute("aria-controls"); });
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  var chip = t.closest(".chip");
+  if(chip){
+    if(chip.id === "f-kashikiri"){ UI.fKashikiri = !UI.fKashikiri; chip.setAttribute("aria-pressed", String(UI.fKashikiri)); }
+    else if(chip.id === "f-flat"){ UI.fFlat = !UI.fFlat; chip.setAttribute("aria-pressed", String(UI.fFlat)); }
+    else if(chip.id === "f-day"){ UI.fDay = !UI.fDay; chip.setAttribute("aria-pressed", String(UI.fDay)); }
+    else if(chip.id === "f-photo"){ UI.fPhoto = !UI.fPhoto; chip.setAttribute("aria-pressed", String(UI.fPhoto)); }
+    else if(chip.hasAttribute("data-sort")){
+      UI.sort = chip.getAttribute("data-sort");
+      $$(".chip[data-sort]").forEach(function(c){ c.setAttribute("aria-pressed", String(c === chip)); });
+    }
+    else if(chip.hasAttribute("data-far")){
+      UI.far = Number(chip.getAttribute("data-far"));
+      $$(".chip[data-far]").forEach(function(c){ c.setAttribute("aria-pressed", String(c === chip)); });
+    }
+    renderList(); return;
+  }
+
+  var star = t.closest(".starbtn");
+  if(star){
+    UI.draftStars = Number(star.getAttribute("data-star"));
+    $$(".starbtn").forEach(function(b){ b.setAttribute("aria-pressed", String(Number(b.getAttribute("data-star")) <= UI.draftStars)); });
+    $("#ratelabel").textContent = RATE_WORD[UI.draftStars];
+    return;
+  }
+
+  if(t.closest("#ratesave")){
+    var sid = UI.openId;
+    var st = UI.draftStars || (myRating(sid) ? myRating(sid).stars : 0);
+    if(!st){ $("#ratesaved").textContent = "★を押して、行きたい度をつけてください"; return; }
+    var nm = ($("#myname").value || "").trim();
+    if(nm) setMyName(nm);
+    Store.put("ratings", "yumeguri_ratings", sid + "__" + CID, {
+      spotId: sid, cid: CID, name: nm || myName() || "名前なし",
+      stars: st, comment: ($("#ratecomment").value || "").trim(), at: Date.now()
+    });
+    var msg = $("#ratesaved"); if(msg){ msg.textContent = "残しました。ありがとう。"; msg.className = "saved"; }
+    return;
+  }
+  if(t.closest("#ratedel")){ Store.remove("ratings","yumeguri_ratings", UI.openId + "__" + CID); UI.draftStars = 0; return; }
+
+  var sb = t.closest(".statusbtn");
+  if(sb){
+    var cur = checkFor(UI.openId) || {};
+    Store.put("checks", "yumeguri_checks", UI.openId, {
+      spotId: UI.openId, status: Number(sb.getAttribute("data-status")),
+      note: ($("#statusnote") ? $("#statusnote").value : (cur.note||"")),
+      by: (($("#myname").value||"").trim() || myName() || "だれか"), at: Date.now()
+    });
+  }
+});
+
+document.addEventListener("change", function(e){
+  if(e.target.id === "statusnote"){
+    var cur = checkFor(UI.openId) || { status:0 };
+    Store.put("checks", "yumeguri_checks", UI.openId, {
+      spotId: UI.openId, status: cur.status||0, note: e.target.value,
+      by: (($("#myname").value||"").trim() || myName() || "だれか"), at: Date.now()
+    });
+  }
+  if(e.target.id === "myname"){ setMyName(e.target.value.trim()); }
+});
+
+document.addEventListener("keydown", function(e){ if(e.key === "Escape" && UI.openId) closeSheet(); });
+
+$("#cheerform").addEventListener("submit", function(e){
+  e.preventDefault();
+  var txt = ($("#cheertext").value || "").trim(); if(!txt) return;
+  var nm = ($("#myname").value || "").trim(); if(nm) setMyName(nm);
+  Store.put("cheers", "yumeguri_cheers", "m" + Date.now().toString(36) + Math.random().toString(36).slice(2,6), {
+    name: nm || myName() || "名前なし", text: txt, at: Date.now()
+  });
+  $("#cheertext").value = "";
+});
+
+/* ===================== 起動 ===================== */
+$("#myname").value = myName();
+renderStrip(); renderCredits();
+Store.init(renderAll);
+renderAll();
+</script>
+<!--ARTIFACT-END-->
+</body>
+</html>
