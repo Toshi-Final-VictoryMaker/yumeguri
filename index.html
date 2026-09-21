@@ -105,7 +105,24 @@ a{color:var(--kin)}
 /* ── 誌面の一件 ─────────────────────────── */
 .feed{list-style:none; margin:0; padding:0}
 .feed > li + li{margin-top:40px; padding-top:40px; border-top:1px solid var(--line-2)}
-.entry{display:block; width:100%; text-align:left}
+.entry{display:block}
+.etext{display:block; width:100%; text-align:left}
+.gwrap{position:relative; background:var(--sumi-2); overflow:hidden; cursor:pointer; touch-action:pan-y pinch-zoom}
+.gstrip{display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; -webkit-overflow-scrolling:touch}
+.gstrip::-webkit-scrollbar{display:none}
+.gstrip img{flex:0 0 100%; width:100%; aspect-ratio:3/2; object-fit:cover; scroll-snap-align:center; background:var(--sumi-2)}
+.gdots{position:absolute; left:0; right:0; bottom:11px; display:flex; justify-content:center; gap:6px; pointer-events:none}
+.gdots i{width:5px; height:5px; border-radius:50%; background:rgba(240,235,225,.38); transition:background .25s, transform .25s}
+.gdots i.on{background:var(--kin); transform:scale(1.4)}
+.gcount{
+  position:absolute; top:0; right:0; font-family:var(--latin); font-size:12px; letter-spacing:.14em;
+  color:var(--washi); background:rgba(19,17,14,.7); padding:5px 11px 6px; pointer-events:none;
+}
+.gcap{
+  position:absolute; top:0; left:0; max-width:66%; font-size:11px; letter-spacing:.04em;
+  color:var(--washi); background:rgba(19,17,14,.7); padding:5px 11px 6px; pointer-events:none;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
 .shot{position:relative; background:var(--sumi-2); overflow:hidden}
 .shot img{width:100%; aspect-ratio:3/2; object-fit:cover; transition:opacity .2s}
 .entry:active .shot img{opacity:.8}
@@ -140,6 +157,7 @@ a{color:var(--kin)}
 }
 .meta .km{font-family:var(--latin); font-size:15px; color:var(--washi); letter-spacing:.04em}
 .meta .yes{color:var(--ok)}
+.meta .sea{color:var(--kin); font-weight:700}
 .meta .no{color:var(--warn)}
 .meta .seen{color:var(--kin)}
 .stars{color:var(--kin); letter-spacing:.14em; font-size:13px}
@@ -149,6 +167,39 @@ a{color:var(--kin)}
   border:1px solid var(--line); padding:46px 22px; text-align:center;
   color:var(--washi-3); font-family:var(--mincho); font-size:15px; line-height:2;
 }
+
+/* ── くらべる ──────────────────────────── */
+.axispick{display:flex; gap:8px; margin:22px 0 0; border-bottom:1px solid var(--line)}
+.axispick button{
+  flex:1; padding:13px 4px 12px; font-family:var(--mincho); font-size:16px; letter-spacing:.14em;
+  color:var(--washi-3); border-bottom:2px solid transparent; margin-bottom:-1px; transition:color .15s, border-color .15s;
+}
+.axispick button[aria-pressed="true"]{color:var(--kin); border-bottom-color:var(--kin); font-weight:700}
+.axisnote{margin:16px 0 0; font-size:13px; line-height:1.9; color:var(--washi-3); letter-spacing:.03em}
+.cgroup{
+  display:flex; align-items:baseline; gap:10px; margin:30px 0 0; padding-bottom:9px;
+  border-bottom:1px solid var(--line); font-family:var(--mincho); font-size:15.5px;
+  font-weight:700; letter-spacing:.14em; color:var(--washi);
+}
+.cgroup.top{color:var(--kin)}
+.cgroup em{font-style:normal; font-family:var(--latin); font-size:12px; letter-spacing:.12em; color:var(--washi-3); margin-left:auto}
+.crow{display:flex; gap:14px; align-items:flex-start; width:100%; text-align:left; padding:16px 0; border-bottom:1px solid var(--line-2)}
+.crow .cmain{flex:1; min-width:0}
+.crow .cmain b{display:block; font-family:var(--mincho); font-size:17px; font-weight:700; letter-spacing:.05em; line-height:1.5}
+.crow .cmain small{display:block; margin-top:6px; font-size:13.5px; line-height:1.9; color:var(--washi-2); letter-spacing:.02em}
+.crow .ckm{flex:0 0 auto; padding-top:3px; font-family:var(--latin); font-size:16px; color:var(--washi-3); letter-spacing:.04em; text-align:right}
+.crow .ckm i{font-style:normal; font-size:10px; display:block; letter-spacing:.14em}
+
+/* ── 三つのものさし（詳細） ── */
+.axes{margin:0}
+.axes dt{
+  display:flex; align-items:baseline; gap:11px; margin-top:20px; padding-bottom:8px;
+  border-bottom:1px solid var(--line); font-family:var(--mincho); font-size:15.5px;
+  font-weight:700; letter-spacing:.09em; color:var(--washi);
+}
+.axes dt:first-of-type{margin-top:0}
+.axes dt .ax{flex:0 0 auto; font-family:var(--latin); font-size:11px; letter-spacing:.2em; color:var(--kin); text-transform:uppercase}
+.axes dd{margin:10px 0 0; font-size:14.5px; line-height:2; color:var(--washi-2); letter-spacing:.02em}
 
 /* ── 応援ボード ─────────────────────────── */
 .board-intro{font-family:var(--mincho); font-size:16px; line-height:2.05; color:var(--washi-2); margin:22px 0 0}
@@ -180,7 +231,7 @@ textarea{min-height:104px; resize:vertical; font-family:var(--mincho)}
   position:fixed; left:0; right:0; bottom:0; z-index:60; background:rgba(19,17,14,.97);
   border-top:1px solid var(--line); padding-bottom:env(safe-area-inset-bottom);
 }
-.tabbar .wrap{display:grid; grid-template-columns:repeat(3,1fr); padding-inline:10px}
+.tabbar .wrap{display:grid; grid-template-columns:repeat(4,1fr); padding-inline:6px}
 .tab{
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
   min-height:58px; padding:9px 2px; color:var(--washi-3); font-size:10.5px;
@@ -298,7 +349,7 @@ details.ask li b{color:var(--washi); font-weight:700}
   <img src="img/hoshi.jpg" alt="法師温泉 長寿館の玄関（雪の日）">
   <div class="over">
     <div class="wrap">
-      <p class="eyebrow">Twelve Inns, One Day</p>
+      <p class="eyebrow">Fourteen Inns, One Day</p>
       <h1>湯めぐり帖</h1>
       <p class="lead">レモンハウスから行きたい湯メモ</p>
       <div class="rule"></div>
@@ -334,6 +385,7 @@ details.ask li b{color:var(--washi); font-weight:700}
     <div class="filters">
       <div class="frow">
         <span class="fkey">条件</span>
+        <button class="tog" id="f-sea" aria-pressed="false" type="button">海を望む</button>
         <button class="tog" id="f-kashikiri" aria-pressed="false" type="button">客室露天・貸切あり</button>
         <button class="tog" id="f-flat" aria-pressed="false" type="button">坂・段差が少ない</button>
         <button class="tog" id="f-day" aria-pressed="false" type="button">日帰り入浴もできる</button>
@@ -348,6 +400,7 @@ details.ask li b{color:var(--washi); font-weight:700}
         <button class="tog" data-far="999" aria-pressed="true" type="button">すべて</button>
         <button class="tog" data-far="100" aria-pressed="false" type="button">100km以内</button>
         <button class="tog" data-far="120" aria-pressed="false" type="button">120km以内</button>
+        <button class="tog" data-far="150" aria-pressed="false" type="button">150km以内</button>
       </div>
     </div>
 
@@ -368,6 +421,18 @@ details.ask li b{color:var(--washi); font-weight:700}
         <ul id="credits"></ul>
       </details>
     </div>
+  </section>
+
+  <section class="view wrap" id="view-compare" role="tabpanel" aria-labelledby="tab-compare" hidden>
+    <div class="seclabel">Compare</div>
+    <h2 class="secja">三つのものさし</h2>
+    <div class="axispick" role="group" aria-label="ものさしを選ぶ">
+      <button data-axis="view" aria-pressed="true" type="button">景色</button>
+      <button data-axis="food" aria-pressed="false" type="button">料理</button>
+      <button data-axis="story" aria-pressed="false" type="button">ゆかり</button>
+    </div>
+    <p class="axisnote" id="axisnote"></p>
+    <div id="comparebody"></div>
   </section>
 
   <section class="view wrap" id="view-rank" role="tabpanel" aria-labelledby="tab-rank" hidden>
@@ -401,6 +466,7 @@ details.ask li b{color:var(--washi); font-weight:700}
 <nav class="tabbar" role="tablist" aria-label="画面切り替え">
   <div class="wrap">
     <button class="tab" id="tab-find" role="tab" aria-selected="true" aria-controls="view-find" type="button"><span class="g">湯</span>えらぶ</button>
+    <button class="tab" id="tab-compare" role="tab" aria-selected="false" aria-controls="view-compare" type="button"><span class="g">較</span>くらべる</button>
     <button class="tab" id="tab-rank" role="tab" aria-selected="false" aria-controls="view-rank" type="button"><span class="g">順</span>家族の順位</button>
     <button class="tab" id="tab-cheer" role="tab" aria-selected="false" aria-controls="view-cheer" type="button"><span class="g">文</span>応援ボード</button>
   </div>
@@ -422,17 +488,739 @@ var FIREBASE_CONFIG = {
 
 var HOME = { name: "レモンハウス（鴻巣市）", lat: 36.0664, lng: 139.5153 };
 
-/* 写真はすべてウィキメディア・コモンズの自由ライセンス */
-var CREDITS = {
-  "hoshi.jpg":       { by:"veroyama", lic:"CC BY 2.0",    url:"https://commons.wikimedia.org/wiki/File:Houshi_Onsen_Chojukan_(6573700409).jpg" },
-  "sekizenkan.jpg":  { by:"DJ Quietstorm", lic:"CC BY 2.0", url:"https://commons.wikimedia.org/wiki/File:Sekizenkan,_Shima_Onsen,_Nakanojo,_Gunma_-_Jan_18,_2017.jpg" },
-  "takaragawa.jpg":  { by:"nobiinue", lic:"CC BY-SA 2.1 JP", url:"https://commons.wikimedia.org/wiki/File:Takaragawa_Onsen_01.jpg" },
-  "kusatsu.jpg":     { by:"Aspere", lic:"CC0",           url:"https://commons.wikimedia.org/wiki/File:251130_Yubatake,_Kusatsu_12.jpg" },
-  "yunishigawa.jpg": { by:"Abasaa", lic:"パブリックドメイン", url:"https://commons.wikimedia.org/wiki/File:Yunishigawa_Onsen_01.JPG" },
-  "chuzenji.jpg":    { by:"MAKIKO OMOKAWA", lic:"CC BY-SA 3.0", url:"https://commons.wikimedia.org/wiki/File:The_autamn_leaves_at_the_Chuzenjiko_lake_from_the_ferry_-_panoramio.jpg" },
-  "fujiya.jpg":      { by:"Bryan Ledgard", lic:"CC BY 2.0", url:"https://commons.wikimedia.org/wiki/File:Fujiya_Hotel,_Miyanoshita_(6289645821).jpg" },
-  "gora.jpg":        { by:"663highland", lic:"CC BY-SA 4.0", url:"https://commons.wikimedia.org/wiki/File:211126_Gora_Park_Hakone_Japan01s3.jpg" },
-  "shuzenji.jpg":    { by:"Motokoka", lic:"CC BY-SA 4.0", url:"https://commons.wikimedia.org/wiki/File:Shuzenji_Onsen_01.jpg" }
+var PHOTOS = {
+ "kanaya": [
+  {
+   "f": "chuzenji.jpg",
+   "cap": "中禅寺湖の秋",
+   "kind": "周辺",
+   "by": "MAKIKO OMOKAWA",
+   "lic": "CC BY-SA 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:The_autamn_leaves_at_the_Chuzenjiko_lake_from_the_ferry_-_panoramio.jpg"
+  },
+  {
+   "f": "kanaya-1.jpg",
+   "cap": "Lake Chuzenji Chuzenjiko 中禅寺湖 Sunsetting",
+   "kind": "周辺",
+   "by": "Sorah Fukumori",
+   "lic": "CC BY 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Lake_Chuzenji_Chuzenjiko_%E4%B8%AD%E7%A6%85%E5%AF%BA%E6%B9%96_Sunsetting_(87686995).jpeg"
+  },
+  {
+   "f": "kanaya-2.jpg",
+   "cap": "Lake Chuzenji Chuzenjiko 中禅寺湖 Sunsetting",
+   "kind": "周辺",
+   "by": "Sorah Fukumori",
+   "lic": "CC BY 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Lake_Chuzenji_Chuzenjiko_%E4%B8%AD%E7%A6%85%E5%AF%BA%E6%B9%96_Sunsetting_(87686997).jpeg"
+  },
+  {
+   "f": "kanaya-3.jpg",
+   "cap": "Lake Chūzenji, Nikkō National Park (中禅寺湖, 日光国立公園) (1",
+   "kind": "周辺",
+   "by": "Roger W from Sarasota, Florida, U.S.A.",
+   "lic": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Lake_Ch%C5%ABzenji,_Nikk%C5%8D_National_Park_(%E4%B8%AD%E7%A6%85%E5%AF%BA%E6%B9%96,_%E6%97%A5%E5%85%89%E5%9B%BD%E7%AB%8B%E5%85%AC%E5%9C%92)_(1967-05-06_by_Roger_W).jpg"
+  },
+  {
+   "f": "kanaya-4.jpg",
+   "cap": "半月山の中禅寺湖展望台からの男体山と紅葉",
+   "kind": "周辺",
+   "by": "くろふね",
+   "lic": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:%E5%8D%8A%E6%9C%88%E5%B1%B1%E3%81%AE%E4%B8%AD%E7%A6%85%E5%AF%BA%E6%B9%96%E5%B1%95%E6%9C%9B%E5%8F%B0%E3%81%8B%E3%82%89%E3%81%AE%E7%94%B7%E4%BD%93%E5%B1%B1%E3%81%A8%E7%B4%85%E8%91%89.jpg"
+  },
+  {
+   "f": "kanaya-5.jpg",
+   "cap": "Fall Leaves At Lake Chuzenji Chuzenjiko 中禅寺湖",
+   "kind": "周辺",
+   "by": "Sorah Fukumori",
+   "lic": "CC BY 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Fall_Leaves_At_Lake_Chuzenji_Chuzenjiko_%E4%B8%AD%E7%A6%85%E5%AF%BA%E6%B9%96_(87686991).jpeg"
+  },
+  {
+   "f": "kanaya-6.jpg",
+   "cap": "Fall Leaves At Lake Chuzenji Chuzenjiko 中禅寺湖",
+   "kind": "周辺",
+   "by": "Sorah Fukumori",
+   "lic": "CC BY 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Fall_Leaves_At_Lake_Chuzenji_Chuzenjiko_%E4%B8%AD%E7%A6%85%E5%AF%BA%E6%B9%96_(87686993).jpeg"
+  }
+ ],
+ "sekizenkan": [
+  {
+   "f": "sekizenkan.jpg",
+   "cap": "昭和五年築の浴場「元禄の湯」",
+   "kind": "宿",
+   "by": "DJ Quietstorm",
+   "lic": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Sekizenkan,_Shima_Onsen,_Nakanojo,_Gunma_-_Jan_18,_2017.jpg"
+  },
+  {
+   "f": "sekizenkan-1.jpg",
+   "cap": "Shima Onsen Sekizenkan Ryokan",
+   "kind": "宿",
+   "by": "kiknotes",
+   "lic": "CC BY-SA 2.0",
+   "url": "https://www.flickr.com/photos/45303004@N02/52090377501"
+  },
+  {
+   "f": "sekizenkan-2.jpg",
+   "cap": "Shima Onsen Sekizenkan Ryokan",
+   "kind": "宿",
+   "by": "kiknotes",
+   "lic": "CC BY-SA 2.0",
+   "url": "https://www.flickr.com/photos/45303004@N02/52090882755"
+  },
+  {
+   "f": "sekizenkan-3.jpg",
+   "cap": "Shima Onsen Sekizenkan Ryokan",
+   "kind": "宿",
+   "by": "kiknotes",
+   "lic": "CC BY-SA 2.0",
+   "url": "https://www.flickr.com/photos/45303004@N02/52090622314"
+  },
+  {
+   "f": "sekizenkan-4.jpg",
+   "cap": "Shima Onsen（Hot Springs）、四万温泉",
+   "kind": "周辺",
+   "by": "T.Kambayashi",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/67736675@N07/7983922557"
+  },
+  {
+   "f": "sekizenkan-5.jpg",
+   "cap": "Shima Onsen（Hot Springs）、四万温泉",
+   "kind": "周辺",
+   "by": "T.Kambayashi",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/67736675@N07/7983926324"
+  },
+  {
+   "f": "sekizenkan-6.jpg",
+   "cap": "Shima Onsen（Hot Springs）、四万温泉",
+   "kind": "周辺",
+   "by": "T.Kambayashi",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/67736675@N07/7983918363"
+  }
+ ],
+ "honke": [
+  {
+   "f": "yunishigawa.jpg",
+   "cap": "湯西川温泉の集落",
+   "kind": "周辺",
+   "by": "Abasaa",
+   "lic": "パブリックドメイン",
+   "url": "https://commons.wikimedia.org/wiki/File:Yunishigawa_Onsen_01.JPG"
+  },
+  {
+   "f": "honke-1.jpg",
+   "cap": "湯西川温泉 かまくら祭：慈光寺",
+   "kind": "周辺",
+   "by": "S.R.G - msucoo93",
+   "lic": "CC BY-NC-SA 2.0",
+   "url": "https://www.flickr.com/photos/125066719@N03/24748680709"
+  },
+  {
+   "f": "honke-2.jpg",
+   "cap": "湯西川温泉 かまくら祭",
+   "kind": "周辺",
+   "by": "S.R.G - msucoo93",
+   "lic": "CC BY-NC-SA 2.0",
+   "url": "https://www.flickr.com/photos/125066719@N03/24738211299"
+  },
+  {
+   "f": "honke-3.jpg",
+   "cap": "湯西川温泉 かまくら祭：平家の里",
+   "kind": "周辺",
+   "by": "S.R.G - msucoo93",
+   "lic": "CC BY-NC-SA 2.0",
+   "url": "https://www.flickr.com/photos/125066719@N03/25090018046"
+  },
+  {
+   "f": "honke-5.jpg",
+   "cap": "湯西川温泉 かまくら祭",
+   "kind": "周辺",
+   "by": "S.R.G - msucoo93",
+   "lic": "CC BY-NC-SA 2.0",
+   "url": "https://www.flickr.com/photos/125066719@N03/24830673800"
+  },
+  {
+   "f": "honke-6.jpg",
+   "cap": "湯西川温泉かまくら祭",
+   "kind": "周辺",
+   "by": "Koda6029",
+   "lic": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/w/index.php?curid=85840658"
+  }
+ ],
+ "senjuan": [
+  {
+   "f": "senjuan-1.jpg",
+   "cap": "一ノ倉沢の紅葉 軽装で行ける日本三大絶壁。 谷川岳ロープウェイ乗り場から舗装路を1時間ほど歩くと到着。 ",
+   "kind": "周辺",
+   "by": "teizoh",
+   "lic": "CC BY-NC-ND 2.0",
+   "url": "https://www.flickr.com/photos/95261801@N04/38159012991"
+  },
+  {
+   "f": "senjuan-2.jpg",
+   "cap": "Waterfall / 谷川岳ロープウェイから見える滝(たき)",
+   "kind": "周辺",
+   "by": "TANAKA Juuyoh (田中十洋)",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/13910409@N05/4851609543"
+  },
+  {
+   "f": "senjuan-3.jpg",
+   "cap": "仙ノ倉山から見た万太郎山（奥は谷川岳）",
+   "kind": "周辺",
+   "by": "Koda6029",
+   "lic": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/w/index.php?curid=72637212"
+  },
+  {
+   "f": "senjuan-5.jpg",
+   "cap": "谷川岳天神平",
+   "kind": "周辺",
+   "by": "Kentaro Ohno",
+   "lic": "CC CC0 1.0",
+   "url": "https://www.flickr.com/photos/47335063@N08/9997583225"
+  }
+ ],
+ "chojukan": [
+  {
+   "f": "hoshi.jpg",
+   "cap": "長寿館の玄関（冬）",
+   "kind": "宿",
+   "by": "不明",
+   "lic": "?",
+   "url": ""
+  },
+  {
+   "f": "chojukan-1.jpg",
+   "cap": "Japanese Bathhouse at Houshi Onsen 法師温泉",
+   "kind": "宿",
+   "by": "JohnCramerPhotography",
+   "lic": "CC BY-NC-ND 2.0",
+   "url": "https://www.flickr.com/photos/14727010@N05/6779993199"
+  },
+  {
+   "f": "chojukan-2.jpg",
+   "cap": "A stream of HŌSHI Onsen 法師温泉の小川",
+   "kind": "宿",
+   "by": "ウィキ太郎 (Wiki Taro)",
+   "lic": "Public domain",
+   "url": "https://commons.wikimedia.org/wiki/File:A_stream_of_H%C5%8CSHI_Onsen_%E6%B3%95%E5%B8%AB%E6%B8%A9%E6%B3%89%E3%81%AE%E5%B0%8F%E5%B7%9D.jpg"
+  },
+  {
+   "f": "chojukan-3.jpg",
+   "cap": "Spa bath at Hoshi Ryokan",
+   "kind": "宿",
+   "by": "Akiyoshi's Room",
+   "lic": "Public domain",
+   "url": "https://commons.wikimedia.org/wiki/File:Spa_bath_at_Hoshi_Ryokan.jpg"
+  },
+  {
+   "f": "chojukan-5.jpg",
+   "cap": "Hōshi Onsen 法師乃湯 02",
+   "kind": "宿",
+   "by": "C.K. Tse",
+   "lic": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:H%C5%8Dshi_Onsen_%E6%B3%95%E5%B8%AB%E4%B9%83%E6%B9%AF_02.jpg"
+  },
+  {
+   "f": "chojukan-6.jpg",
+   "cap": "Hōshi Onsen 法師乃湯 03",
+   "kind": "宿",
+   "by": "C.K. Tse",
+   "lic": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:H%C5%8Dshi_Onsen_%E6%B3%95%E5%B8%AB%E4%B9%83%E6%B9%AF_03.jpg"
+  },
+  {
+   "f": "chojukan-4.jpg",
+   "cap": "Hōshi Onsen in autumn",
+   "kind": "周辺",
+   "by": "C.K. Tse",
+   "lic": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:H%C5%8Dshi_Onsen_in_autumn.jpg"
+  }
+ ],
+ "takaragawa": [
+  {
+   "f": "takaragawa.jpg",
+   "cap": "川沿いの大露天風呂",
+   "kind": "宿",
+   "by": "nobiinue",
+   "lic": "CC BY-SA 2.1 JP",
+   "url": "https://commons.wikimedia.org/wiki/File:Takaragawa_Onsen_01.jpg"
+  },
+  {
+   "f": "takaragawa-1.jpg",
+   "cap": "Takaragawa Onsen 宝川温泉",
+   "kind": "宿",
+   "by": "Patrick Vierthaler",
+   "lic": "CC BY-NC 2.0",
+   "url": "https://www.flickr.com/photos/74399113@N07/14180791833"
+  },
+  {
+   "f": "takaragawa-2.jpg",
+   "cap": "Takaragawa Onsen 宝川温泉",
+   "kind": "宿",
+   "by": "Patrick Vierthaler",
+   "lic": "CC BY-NC 2.0",
+   "url": "https://www.flickr.com/photos/74399113@N07/13974146457"
+  },
+  {
+   "f": "takaragawa-3.jpg",
+   "cap": "Takaragawa Onsen 宝川温泉",
+   "kind": "宿",
+   "by": "Patrick Vierthaler",
+   "lic": "CC BY-NC 2.0",
+   "url": "https://www.flickr.com/photos/74399113@N07/14157321171"
+  },
+  {
+   "f": "takaragawa-4.jpg",
+   "cap": "Takaragawa Onsen 宝川温泉",
+   "kind": "宿",
+   "by": "Patrick Vierthaler",
+   "lic": "CC BY-NC 2.0",
+   "url": "https://www.flickr.com/photos/74399113@N07/14160693825"
+  },
+  {
+   "f": "takaragawa-5.jpg",
+   "cap": "Takaragawa Onsen 宝川温泉",
+   "kind": "宿",
+   "by": "Patrick Vierthaler",
+   "lic": "CC BY-NC 2.0",
+   "url": "https://www.flickr.com/photos/74399113@N07/13974106320"
+  },
+  {
+   "f": "takaragawa-6.jpg",
+   "cap": "Takaragawa Onsen 宝川温泉",
+   "kind": "宿",
+   "by": "Patrick Vierthaler",
+   "lic": "CC BY-NC 2.0",
+   "url": "https://www.flickr.com/photos/74399113@N07/14137545166"
+  }
+ ],
+ "naraya": [
+  {
+   "f": "kusatsu.jpg",
+   "cap": "草津温泉 湯畑",
+   "kind": "周辺",
+   "by": "不明",
+   "lic": "?",
+   "url": ""
+  },
+  {
+   "f": "naraya-1.jpg",
+   "cap": "Kusatsu-Onsen(hot spring) / 草津温泉(くさつ おんせん)湯畑(ゆばたけ)",
+   "kind": "周辺",
+   "by": "TANAKA Juuyoh (田中十洋)",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/13910409@N05/49235530847"
+  },
+  {
+   "f": "naraya-2.jpg",
+   "cap": "(群馬県) 草津温泉、千代の湯。草津の共同湯といえば、湯畑前の白旗の湯が有名ですが、あそこは観光用、熱す",
+   "kind": "周辺",
+   "by": "Shift",
+   "lic": "CC BY-SA 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:(%E7%BE%A4%E9%A6%AC%E7%9C%8C)_%E8%8D%89%E6%B4%A5%E6%B8%A9%E6%B3%89%E3%80%81%E5%8D%83%E4%BB%A3%E3%81%AE%E6%B9%AF%E3%80%82%E8%8D%89%E6%B4%A5%E3%81%AE%E5%85%B1%E5%90%8C%E6%B9%AF%E3%81%A8%E3%81%84%E3%81%88%E3%81%B0%E3%80%81%E6%B9%AF%E7%95%91%E5%89%8D%E3%81%AE%E7%99%BD%E6%97%97%E3%81%AE%E6%B9%AF%E3%81%8C%E6%9C%89%E5%90%8D%E3%81%A7%E3%81%99%E3%81%8C%E3%80%81%E3%81%82%E3%81%9D%E3%81%93%E3%81%AF%E8%A6%B3%E5%85%89%E7%94%A8%E3%80%81%E7%86%B1%E3%81%99%E3%81%8E%E3%81%A7%E3%81%99%E3%80%82_-_panoramio.jpg"
+  },
+  {
+   "f": "naraya-4.jpg",
+   "cap": "草津温泉 湯畑",
+   "kind": "周辺",
+   "by": "Volksoper",
+   "lic": "CC BY-SA 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:%E8%8D%89%E6%B4%A5%E6%B8%A9%E6%B3%89_%E6%B9%AF%E7%95%91.JPG"
+  },
+  {
+   "f": "naraya-5.jpg",
+   "cap": "草津温泉の湯畑01",
+   "kind": "周辺",
+   "by": "くろふね",
+   "lic": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:%E8%8D%89%E6%B4%A5%E6%B8%A9%E6%B3%89%E3%81%AE%E6%B9%AF%E7%95%9101.jpg"
+  },
+  {
+   "f": "naraya-6.jpg",
+   "cap": "草津温泉の湯畑02",
+   "kind": "周辺",
+   "by": "くろふね",
+   "lic": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:%E8%8D%89%E6%B4%A5%E6%B8%A9%E6%B3%89%E3%81%AE%E6%B9%AF%E7%95%9102.jpg"
+  }
+ ],
+ "daikokuya": [
+  {
+   "f": "daikokuya-1.jpg",
+   "cap": "Autumn forest in Nasu",
+   "kind": "周辺",
+   "by": "雷太",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/128275472@N07/52509047792"
+  },
+  {
+   "f": "daikokuya-2.jpg",
+   "cap": "Autumn in Myounji Shrine",
+   "kind": "周辺",
+   "by": "雷太",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/128275472@N07/52510007625"
+  },
+  {
+   "f": "daikokuya-3.jpg",
+   "cap": "Kinomata River, Nasushiobara, Tochigi",
+   "kind": "周辺",
+   "by": "Kanohara (talk)",
+   "lic": "Public domain",
+   "url": "https://commons.wikimedia.org/wiki/File:Kinomata_River,_Nasushiobara,_Tochigi.jpg"
+  },
+  {
+   "f": "daikokuya-4.jpg",
+   "cap": "Autumn in Tochigi",
+   "kind": "周辺",
+   "by": "雷太",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/128275472@N07/52510008445"
+  },
+  {
+   "f": "daikokuya-5.jpg",
+   "cap": "Colorful autumn",
+   "kind": "周辺",
+   "by": "雷太",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/128275472@N07/52510008785"
+  },
+  {
+   "f": "daikokuya-6.jpg",
+   "cap": "Autumn in Tochigi",
+   "kind": "周辺",
+   "by": "雷太",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/128275472@N07/52510009210"
+  }
+ ],
+ "taikanso": [
+  {
+   "f": "taikanso-1.jpg",
+   "cap": "Blue Atami beach 青い熱海海岸",
+   "kind": "周辺",
+   "by": "T.Kiya",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/38217580@N05/4926469994"
+  },
+  {
+   "f": "taikanso-2.jpg",
+   "cap": "相模湾 / Sagami Bay",
+   "kind": "周辺",
+   "by": "tarawo",
+   "lic": "CC BY-NC-SA 2.0",
+   "url": "https://www.flickr.com/photos/9718662@N05/818117509"
+  },
+  {
+   "f": "taikanso-3.jpg",
+   "cap": "Sagami Bay sunrise",
+   "kind": "周辺",
+   "by": "lazysupper",
+   "lic": "CC BY-NC-ND 2.0",
+   "url": "https://www.flickr.com/photos/48575489@N00/3289790959"
+  },
+  {
+   "f": "taikanso-4.jpg",
+   "cap": "Looking over the bay through a sea of branches",
+   "kind": "周辺",
+   "by": "tzejen",
+   "lic": "CC BY-NC-ND 2.0",
+   "url": "https://www.flickr.com/photos/62549401@N00/49256307552"
+  },
+  {
+   "f": "taikanso-5.jpg",
+   "cap": "熱海、海岸付近。 そろそろ帰路につくか。",
+   "kind": "周辺",
+   "by": "i-saint",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/25410218@N05/5562938154"
+  },
+  {
+   "f": "taikanso-6.jpg",
+   "cap": "R135 から熱海海岸自動車道を見おろす",
+   "kind": "周辺",
+   "by": "hm7hm7",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/26473912@N04/6147616874"
+  }
+ ],
+ "fujiya": [
+  {
+   "f": "fujiya.jpg",
+   "cap": "富士屋ホテル 本館",
+   "kind": "宿",
+   "by": "Bryan Ledgard",
+   "lic": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Fujiya_Hotel,_Miyanoshita_(6289645821).jpg"
+  },
+  {
+   "f": "fujiya-1.jpg",
+   "cap": "Garden - Fujiya Hotel - Hakone, Japan - DSC06130",
+   "kind": "宿",
+   "by": "Daderot",
+   "lic": "CC0",
+   "url": "https://commons.wikimedia.org/wiki/File:Garden_-_Fujiya_Hotel_-_Hakone,_Japan_-_DSC06130.jpg"
+  },
+  {
+   "f": "fujiya-2.jpg",
+   "cap": "Garden - Fujiya Hotel - Hakone, Japan - DSC06140",
+   "kind": "宿",
+   "by": "Daderot",
+   "lic": "CC0",
+   "url": "https://commons.wikimedia.org/wiki/File:Garden_-_Fujiya_Hotel_-_Hakone,_Japan_-_DSC06140.jpg"
+  },
+  {
+   "f": "fujiya-3.jpg",
+   "cap": "Garden - Fujiya Hotel - Hakone, Japan - DSC06152",
+   "kind": "宿",
+   "by": "Daderot",
+   "lic": "CC0",
+   "url": "https://commons.wikimedia.org/wiki/File:Garden_-_Fujiya_Hotel_-_Hakone,_Japan_-_DSC06152.jpg"
+  },
+  {
+   "f": "fujiya-4.jpg",
+   "cap": "Garden - Fujiya Hotel - Hakone, Japan - DSC06180",
+   "kind": "宿",
+   "by": "Daderot",
+   "lic": "CC0",
+   "url": "https://commons.wikimedia.org/wiki/File:Garden_-_Fujiya_Hotel_-_Hakone,_Japan_-_DSC06180.jpg"
+  },
+  {
+   "f": "fujiya-5.jpg",
+   "cap": "File:English Garden - Fujiya Hotel - Hakone, Japan -",
+   "kind": "宿",
+   "by": "Daderot",
+   "lic": "CC CC0 1.0",
+   "url": "https://commons.wikimedia.org/w/index.php?curid=61241516"
+  },
+  {
+   "f": "fujiya-6.jpg",
+   "cap": "File:Garden - Fujiya Hotel - Hakone, Japan - DSC0614",
+   "kind": "宿",
+   "by": "Daderot",
+   "lic": "CC CC0 1.0",
+   "url": "https://commons.wikimedia.org/w/index.php?curid=61241515"
+  }
+ ],
+ "gorakadan": [
+  {
+   "f": "gora.jpg",
+   "cap": "強羅公園（宿の周辺）",
+   "kind": "周辺",
+   "by": "663highland",
+   "lic": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:211126_Gora_Park_Hakone_Japan01s3.jpg"
+  },
+  {
+   "f": "gorakadan-1.jpg",
+   "cap": "芦ノ湖星夜 Star Night at Lake Ashi",
+   "kind": "周辺",
+   "by": "yukikei",
+   "lic": "CC BY-NC 2.0",
+   "url": "https://www.flickr.com/photos/13327238@N02/8662536315"
+  },
+  {
+   "f": "gorakadan-2.jpg",
+   "cap": "噴水 @強羅公園（神奈川県箱根町強羅）",
+   "kind": "周辺",
+   "by": "TOMODA",
+   "lic": "CC BY-NC-SA 2.0",
+   "url": "https://www.flickr.com/photos/82717115@N00/19702029809"
+  },
+  {
+   "f": "gorakadan-3.jpg",
+   "cap": "芦ノ湖からの富士山 - Mt.Fuji and Lake Ashinoko",
+   "kind": "周辺",
+   "by": "hogeasdf",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/9177053@N05/2661438462"
+  },
+  {
+   "f": "gorakadan-4.jpg",
+   "cap": "芦ノ湖からの富士山 - Mt.Fuji and Lake Ashinoko",
+   "kind": "周辺",
+   "by": "hogeasdf",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/9177053@N05/2660611859"
+  },
+  {
+   "f": "gorakadan-5.jpg",
+   "cap": "芦ノ湖からの富士山とそれを見る人 - Mt.Fuji and Lake Ashinoko",
+   "kind": "周辺",
+   "by": "hogeasdf",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/9177053@N05/2661438200"
+  },
+  {
+   "f": "gorakadan-6.jpg",
+   "cap": "芦ノ湖からの富士山 - Mt.Fuji and Lake Ashinoko",
+   "kind": "周辺",
+   "by": "hogeasdf",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/9177053@N05/3052835520"
+  }
+ ],
+ "asaba": [
+  {
+   "f": "shuzenji.jpg",
+   "cap": "修善寺温泉の風景",
+   "kind": "周辺",
+   "by": "Motokoka",
+   "lic": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Shuzenji_Onsen_01.jpg"
+  },
+  {
+   "f": "asaba-2.jpg",
+   "cap": "Shizuoka-Shuzenji Onsen Town-xl",
+   "kind": "周辺",
+   "by": "伊豆市",
+   "lic": "CC BY 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Shizuoka-Shuzenji_Onsen_Town-xl.jpg"
+  },
+  {
+   "f": "asaba-3.jpg",
+   "cap": "Shuzenji Onsen and River",
+   "kind": "周辺",
+   "by": "張振",
+   "lic": "CC BY-SA 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Shuzenji_Onsen_and_River.jpg"
+  },
+  {
+   "f": "asaba-4.jpg",
+   "cap": "Bamboo Forest, Shuzenji, Izu",
+   "kind": "周辺",
+   "by": "eyeonjapan.com",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/31123101@N03/3794936224"
+  },
+  {
+   "f": "asaba-5.jpg",
+   "cap": "Bamboo Forest Pass",
+   "kind": "周辺",
+   "by": "Tak H.",
+   "lic": "CC BY-SA 2.0",
+   "url": "https://www.flickr.com/photos/130229276@N07/46122647005"
+  },
+  {
+   "f": "asaba-6.jpg",
+   "cap": "修善寺 竹林の小径",
+   "kind": "周辺",
+   "by": "NISSANEV",
+   "lic": "CC BY-NC-ND 2.0",
+   "url": "https://www.flickr.com/photos/47843154@N07/25742954083"
+  }
+ ],
+ "ginsuiso": [
+  {
+   "f": "inatoriport.jpg",
+   "cap": "稲取漁港。名物の金目鯛はここに揚がる",
+   "kind": "周辺",
+   "by": "Drivephotographer",
+   "lic": "CC0",
+   "url": "https://commons.wikimedia.org/wiki/File:Inatori_Fishing_Port.jpg"
+  },
+  {
+   "f": "ginsuiso-1.jpg",
+   "cap": "稲取海岸｜Inatori Coast",
+   "kind": "周辺",
+   "by": "izunavi",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/126057645@N04/14748736798"
+  },
+  {
+   "f": "ginsuiso-2.jpg",
+   "cap": "稲取海岸｜Inatori Coast",
+   "kind": "周辺",
+   "by": "izunavi",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/126057645@N04/14912347386"
+  },
+  {
+   "f": "ginsuiso-3.jpg",
+   "cap": "稲取海岸｜Inatori Coast",
+   "kind": "周辺",
+   "by": "izunavi",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/126057645@N04/14748732268"
+  },
+  {
+   "f": "ginsuiso-4.jpg",
+   "cap": "稲取海岸｜Inatori Coast",
+   "kind": "周辺",
+   "by": "izunavi",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/126057645@N04/14748735858"
+  },
+  {
+   "f": "ginsuiso-5.jpg",
+   "cap": "稲取海岸｜Inatori Coast",
+   "kind": "周辺",
+   "by": "izunavi",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/126057645@N04/14935341735"
+  },
+  {
+   "f": "ginsuiso-6.jpg",
+   "cap": "稲取海岸｜Inatori Coast",
+   "kind": "周辺",
+   "by": "izunavi",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/126057645@N04/14912346406"
+  }
+ ],
+ "biwa": [
+  {
+   "f": "biwa-1.jpg",
+   "cap": "白浜大浜海水浴場からの初日の出｜Shirahama Ohama Beach Sunrise",
+   "kind": "周辺",
+   "by": "izunavi",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/126057645@N04/14783714111"
+  },
+  {
+   "f": "biwa-2.jpg",
+   "cap": "白浜大浜海水浴場からの日の出｜Shirahama Ohama Beach Sunrise",
+   "kind": "周辺",
+   "by": "izunavi",
+   "lic": "CC BY 2.0",
+   "url": "https://www.flickr.com/photos/126057645@N04/14600336207"
+  },
+  {
+   "f": "biwa-3.jpg",
+   "cap": "城崎海岸, 伊東八景, 櫻花, 伊東, 城ヶ崎海岸, じょうがさきかいがん, 桜花, 伊東市, いとうし",
+   "kind": "周辺",
+   "by": "bryan...",
+   "lic": "CC BY-SA 2.0",
+   "url": "https://www.flickr.com/photos/91049143@N00/13761680593"
+  },
+  {
+   "f": "biwa-5.jpg",
+   "cap": "城崎海岸, 伊東八景, 櫻花, 伊東, 城ヶ崎海岸, じょうがさきかいがん, 桜花, 伊東市, いとうし",
+   "kind": "周辺",
+   "by": "bryan...",
+   "lic": "CC BY-SA 2.0",
+   "url": "https://www.flickr.com/photos/91049143@N00/13761850863"
+  },
+  {
+   "f": "biwa-6.jpg",
+   "cap": "城崎海岸, 伊東八景, 櫻花, 伊東, 城ヶ崎海岸, じょうがさきかいがん, 桜花, 伊東市, いとうし",
+   "kind": "周辺",
+   "by": "bryan...",
+   "lic": "CC BY-SA 2.0",
+   "url": "https://www.flickr.com/photos/91049143@N00/13761991244"
+  }
+ ]
 };
 
 /* ===================== 十二軒 =====================
@@ -447,15 +1235,19 @@ var SPOTS = [
     tagline:"中禅寺湖の森に、丸太造りの西洋館。",
     stay:"stay", kashikiri:"unknown", terrain:"mild", spring:"奥日光湯元からひく含硫黄泉",
     wiki:"日光金谷ホテル",
-    photos:[{f:"chuzenji.jpg", cap:"中禅寺湖の秋", kind:"周辺"}],
+    view:{ kind:"lake", text:"中禅寺湖の湖畔。男体山が水の向こうに立ち、秋は森ごと色が変わります。" },
+    food:{ kind:"yo", text:"金谷伝統の西洋料理。百年受け継ぐカレーと、日光名物の虹鱒。ダイニングで供されます。" },
+    story:{ kind:"bunjin", text:"明治の外国人が「日本の避暑地」を見つけた場所。湖畔にはいまも英国大使館とイタリア大使館の別荘が残り、歩いて見にいけます。" },
     why:"明治六年創業、日本最古級のリゾートホテルである金谷ホテルの系譜をひく、中禅寺湖畔の宿。奥日光湯元から引いた白濁の硫黄泉「空ぶろ」があります。畳ではなくベッド、館内はホテルの造り。体に負担をかけずに「特別な一泊」を成立させやすい、この帖でいちばん現実的な選択肢です。" },
 
   { id:"sekizenkan", name:"積善館", area:"群馬県中之条町・四万温泉", lat:36.6480, lng:138.7280,
     kaku:"元禄四年（1691）創業／本館は群馬県指定重要文化財",
     tagline:"三百三十余年、同じ湯を守りつづけてきた。",
     stay:"both", kashikiri:"unknown", terrain:"mild", spring:"ナトリウム・カルシウム-塩化物硫酸塩泉",
-    wiki:"積善館",
-    photos:[{f:"sekizenkan.jpg", cap:"昭和五年築の浴場「元禄の湯」", kind:"宿"}],
+    wiki:"四万温泉",
+    view:{ kind:"gorge", text:"四万川にかかる朱塗りの橋と、木造三階建て。この一枚の絵を見に行く価値があります。" },
+    food:{ kind:"kaiseki", text:"上州の山の幸の会席。本館・山荘・佳松亭で献立と格式が変わるので、棟選びがそのまま食事選びになります。" },
+    story:{ kind:"densetsu", text:"「四万の病を治す霊泉」という言い伝えの地。日向守碓氷貞光が、夢枕に立った童子に湯の在りかを教わったと伝わります。アニメ映画の舞台のモデルとしてもよく名が挙がる一軒。" },
     why:"現存する日本最古の湯宿建築。写真の「元禄の湯」は昭和五年に建てられた大正ロマンの浴場で、アーチ窓から差す光と五つの石造りの湯船が、当時のまま残っています。派手な宿ではありません。けれど「ここに泊まった」という事実が、あとからずっと効いてくる種類の宿です。",
     caution:"本館は木造三階建てで階段が多い造りです。高台の新しい棟は移動が楽と聞きます。予約時に必ず棟を指定し、エレベーターの有無を確認してください。" },
 
@@ -464,7 +1256,9 @@ var SPOTS = [
     tagline:"吊り橋を渡った先で、囲炉裏に魚を立てる。",
     stay:"both", kashikiri:"unknown", terrain:"hilly", spring:"アルカリ性単純温泉",
     wiki:"湯西川温泉",
-    photos:[{f:"yunishigawa.jpg", cap:"湯西川温泉の集落", kind:"周辺"}],
+    view:{ kind:"gorge", text:"渓流の真上に架かる吊り橋を渡って玄関へ。宿そのものが谷に張り出しています。" },
+    food:{ kind:"irori", text:"囲炉裏に串を立てて焼く「平家お狩場焼」。山女魚や岩魚、山の幸を、炭火の前で一本ずつ。この帖でいちばん記憶に残る食事になるはずです。" },
+    story:{ kind:"densetsu", text:"壇ノ浦に敗れた平家の落人が隠れ住んだと伝わる里。煙が上がるからと鯉のぼりを揚げず、時を告げるからと鶏を飼わない——追手を恐れた掟が、いまも語り継がれています。" },
     why:"平家の落人が隠れ住んだと伝わる、山あいの集落。渓流にかかる吊り橋を渡って玄関に入り、夜は囲炉裏を切った「平家お狩場焼」を食べます。隠れ家という言葉を、比喩ではなく事実として使える数少ない宿です。",
     caution:"吊り橋と階段が、この宿の名物であり同時に難所です。膝に不安があるなら、橋を通らずに入れる経路があるかを必ず先に確認してください。" },
 
@@ -472,15 +1266,20 @@ var SPOTS = [
     kaku:"ルレ・エ・シャトー加盟／全室 露天風呂付き",
     tagline:"谷川岳の懐で、誰にも会わずに湯に入る。",
     stay:"stay", kashikiri:"yes", terrain:"mild", spring:"単純温泉",
-    why:"全室に露天風呂が付き、部屋から一歩も出ずに湯に入れます。世界の名宿が集まるルレ・エ・シャトーに加盟する、群馬では数少ない一軒。長いガラスの回廊の向こうに、谷川岳の森が続きます。人目を気にしなくていい、という一点において、この帖でもっとも確実な宿です。" },
+    view:{ kind:"mountain", text:"総ガラスの長い回廊。その向こうに谷川岳の森が、季節ごとに色を変えて広がります。" },
+    food:{ kind:"kaiseki", text:"上州の食材を使った創作和食。上州牛や地の野菜を、個室の食事処で。人目を気にせず食べられます。" },
+    story:{ kind:"kenchiku", text:"古い由緒より、静けさを設計しきったことそのものが物語の宿。世界の名宿が集まるルレ・エ・シャトーに、群馬から加盟した数少ない一軒です。" },
+    why:"全室に露天風呂が付き、部屋から一歩も出ずに湯に入れます。長いガラスの回廊の向こうに、谷川岳の森が続きます。人目を気にしなくていい、という一点において、この帖でもっとも確実な宿です。" },
 
   { id:"chojukan", name:"法師温泉 長寿館", area:"群馬県みなかみ町", lat:36.7550, lng:138.8100,
     kaku:"明治八年築「法師乃湯」は国登録有形文化財",
     tagline:"床板の下から、湯が直接わき上がってくる。",
     stay:"both", kashikiri:"unknown", terrain:"mild", spring:"カルシウム・ナトリウム-硫酸塩泉",
     wiki:"法師温泉",
-    photos:[{f:"hoshi.jpg", cap:"長寿館の玄関（冬）", kind:"宿"}],
-    why:"明治八年に建てられた「法師乃湯」は、湯船の底の玉石の隙間から源泉がそのまま湧き上がります。国の登録有形文化財。かつて国鉄のポスターに使われ、日本人が思い浮かべる「温泉」の像そのものを作った一枚として知られています。",
+    view:{ kind:"mountain", text:"三国峠の山ふところに一軒宿。冬は雪に埋もれ、あの玄関がそのまま絵になります。" },
+    food:{ kind:"kaiseki", text:"山菜と川魚の、飾らない会席。囲炉裏のある部屋で供されることもあります。" },
+    story:{ kind:"densetsu", text:"弘法大師が旅の途中に見つけたという開湯伝説が、そのまま「法師」の名になりました。与謝野晶子も訪れ、のちに国鉄のポスターに使われて、日本人が思い浮かべる「温泉」の像そのものを作った一軒です。" },
+    why:"明治八年に建てられた「法師乃湯」は、湯船の底の玉石の隙間から源泉がそのまま湧き上がります。国の登録有形文化財。",
     caution:"法師乃湯は時間帯で男女が入れ替わる混浴です（女性専用時間あり）。木造の古い建物なので、段差と階段の位置を予約時に確認してください。" },
 
   { id:"takaragawa", name:"宝川温泉 汪泉閣", area:"群馬県みなかみ町", lat:36.8300, lng:138.9600,
@@ -488,8 +1287,10 @@ var SPOTS = [
     tagline:"川と露天の境が、どこにも見あたらない。",
     stay:"both", kashikiri:"unknown", terrain:"hilly", spring:"単純温泉",
     wiki:"宝川温泉",
-    photos:[{f:"takaragawa.jpg", cap:"川沿いの大露天風呂", kind:"宿"}],
-    why:"利根川の源流沿いに、四つの巨大な露天風呂が並びます。写真のとおり、湯船と渓流が地続きに見える景色は日本でもここだけ。混浴が基本ですが湯浴み着の着用が認められており、その点はむしろ好都合かもしれません。",
+    view:{ kind:"gorge", text:"利根川源流の渓流と、四つの大露天。湯船と川が地続きに見える景色は、日本でもここだけです。" },
+    food:{ kind:"kaiseki", text:"山女魚や岩魚、上州牛など山の幸の会席。渓流の音を聞きながら。" },
+    story:{ kind:"densetsu", text:"日本武尊が白鷹に導かれて湯を見つけたという開湯伝説が残り、露天のひとつは「摩訶の湯」と呼ばれます。" },
+    why:"利根川の源流沿いに、四つの巨大な露天風呂が並びます。混浴が基本ですが湯浴み着の着用が認められており、その点はむしろ好都合かもしれません。",
     caution:"露天までの道のりに距離と段差があります。膝への負担は小さくありません。湯浴み着の扱いを含め、必ず事前に電話でご確認を。" },
 
   { id:"naraya", name:"草津温泉 奈良屋", area:"群馬県草津町", lat:36.6220, lng:138.5960,
@@ -497,31 +1298,52 @@ var SPOTS = [
     tagline:"草津でいちばん好かれた湯を、湯守が毎日ととのえる。",
     stay:"stay", kashikiri:"unknown", terrain:"hilly", spring:"酸性・含硫黄-アルミニウム-硫酸塩塩化物泉",
     wiki:"草津温泉",
-    photos:[{f:"kusatsu.jpg", cap:"草津温泉 湯畑", kind:"周辺"}],
-    why:"草津に数ある源泉のうち、白旗源泉をひく宿。代々の湯守が、湯の温度と質を毎日手で調整しています。湯畑まで歩いてすぐ。日本を代表する湯に、老舗の作法で入る一泊です。",
+    view:{ kind:"mountain", text:"白根の山なみ。湯畑まで歩いてすぐで、湯けむりの立つ夜の湯畑を見にいけます。" },
+    food:{ kind:"kaiseki", text:"上州の会席。地の野菜と山の幸を、落ち着いた食事処で。" },
+    story:{ kind:"densetsu", text:"この宿がひく白旗源泉は、源頼朝が狩りの途中に見つけたという言い伝えの湯。湯もみの唄と湯畑は、いまも草津の象徴です。" },
+    why:"草津に数ある源泉のうち、白旗源泉をひく宿。代々の湯守が、湯の温度と質を毎日手で調整しています。日本を代表する湯に、老舗の作法で入る一泊です。",
     caution:"強い酸性の湯です。手術後に入るなら主治医に一度ご相談ください。草津の町は全体が坂で、湯畑まわりにも階段があります。" },
 
   { id:"daikokuya", name:"板室温泉 大黒屋", area:"栃木県那須塩原市", lat:36.9750, lng:139.8300,
     kaku:"天文二十年（1551）創業／現代美術を常設する保養の宿",
     tagline:"観光ではなく、保養。いまも正面からそう名乗る。",
     stay:"stay", kashikiri:"unknown", terrain:"mild", spring:"アルカリ性単純温泉",
-    why:"創業は室町の終わり。観光ではなく「保養」を掲げ、現代美術のコレクションを館内に常設している、静かで少し変わった一軒です。那須の喧噪から離れた板室の高原にあり、湯はやわらかな単純泉。体を休めに行く、という今回の目的にいちばん近い宿かもしれません。" },
+    wiki:"板室温泉",
+    view:{ kind:"mountain", text:"那珂川の渓流と、那須の高原。那須の賑わいから離れた静けさが身上です。" },
+    food:{ kind:"yojo", text:"量で驚かせる献立ではありません。体にやさしく、一品ずつ残さず食べきれる分量。療養明けの胃には、これがいちばんありがたいかもしれません。" },
+    story:{ kind:"toji", text:"平安の昔に見つかったと伝わり、古くから「下野の薬湯」と呼ばれてきた湯。脊椎や神経の病に効くとされ、いまも湯治の宿を名乗りつづけています。" },
+    why:"創業は室町の終わり。観光ではなく「保養」を掲げ、現代美術のコレクションを館内に常設している、静かで少し変わった一軒です。体を休めに行く、という今回の目的にいちばん近い宿かもしれません。" },
+
+  { id:"taikanso", name:"熱海 大観荘", area:"静岡県熱海市", lat:35.0980, lng:139.0760,
+    kaku:"横山大観が名付けた宿／数寄屋の名匠・平田雅哉の建築",
+    tagline:"日本画の巨匠が、その眺めに名を与えた。",
+    stay:"stay", kashikiri:"unknown", terrain:"mild", spring:"自家源泉二本をもつ熱海の湯",
+    wiki:"熱海温泉",
+    view:{ kind:"sea", text:"相模灘と初島・大島。庭には五つの滝が流れ、海と山を同時に見わたせます。" },
+    food:{ kind:"umi", text:"相模灘の海の幸を主役にした会席。熱海の港に揚がる地魚が並びます。" },
+    story:{ kind:"bunjin", text:"日本画の巨匠・横山大観が、この眺めにふさわしい名をと「大観荘」と名付けた宿。建物は「大工一代」で知られる数寄屋の名匠・平田雅哉の手によるものです。" },
+    why:"熱海駅から歩いて十分ほど、海を見下ろす高台に建つ老舗。横山大観ゆかりの名と、平田雅哉の数寄屋建築、そして二本の自家源泉。海を望む宿のなかでは、レモンハウスからいちばん近い一軒です。",
+    caution:"熱海は斜面の町です。館内のエレベーターの有無と、客室から浴場までの経路を予約時にご確認ください。" },
 
   { id:"fujiya", name:"箱根 富士屋ホテル", area:"神奈川県箱根町・宮ノ下", lat:35.2370, lng:139.0530,
     kaku:"明治十一年（1878）創業／本館ほか国登録有形文化財",
     tagline:"日本の西洋リゾートは、この建物から始まった。",
     stay:"both", kashikiri:"unknown", terrain:"hilly", spring:"ナトリウム-塩化物泉（自家源泉）",
     wiki:"富士屋ホテル",
-    photos:[{f:"fujiya.jpg", cap:"富士屋ホテル 本館", kind:"宿"}],
-    why:"日本で最初期のリゾートホテル。唐破風の屋根の下に西洋建築を収めた本館は国の登録有形文化財で、ヘレン・ケラーもチャップリンもここに泊まりました。温泉は自家源泉。湯そのものより、建物と時間を見に行く宿です。",
+    view:{ kind:"garden", text:"明星ヶ岳と早川の谷。けれど本当の見どころは、唐破風の屋根に西洋建築を載せた建物そのものです。" },
+    food:{ kind:"yo", text:"メインダイニング「ザ・フジヤ」の本格フランス料理。百四十年受け継がれたビーフカレーも名物です。" },
+    story:{ kind:"bunjin", text:"ヘレン・ケラー、チャールズ・チャップリン、ジョン・レノン一家が泊まった宿。客室棟「花御殿」の部屋にはひとつずつ花の名がついていて、誰がどの部屋に泊まったかが語り草になっています。" },
+    why:"日本で最初期のリゾートホテル。唐破風の屋根の下に西洋建築を収めた本館は国の登録有形文化財です。温泉は自家源泉。湯そのものより、建物と時間を見に行く宿です。",
     caution:"宮ノ下は急な斜面の町で、歴史的建造物ゆえ館内にも段差と階段があります。バリアフリー対応の客室があるか、予約時に必ずご確認ください。" },
 
   { id:"gorakadan", name:"強羅花壇", area:"神奈川県箱根町・強羅", lat:35.2450, lng:139.0480,
     kaku:"旧閑院宮別邸跡／露天風呂付き客室",
     tagline:"宮家の別邸跡に建つ、日本の高級旅館の代名詞。",
     stay:"stay", kashikiri:"yes", terrain:"hilly", spring:"ナトリウム-塩化物泉",
-    photos:[{f:"gora.jpg", cap:"強羅公園（宿の周辺）", kind:"周辺"}],
-    why:"閑院宮家の別邸があった土地に建つ宿。竹林を抜ける長い階段廊下と、そこから一転して開ける眺望で知られます。露天風呂付きの客室があり、部屋の中で一泊を完結させることができます。「いつか泊まる宿」として名前が挙がりつづけてきた一軒。",
+    view:{ kind:"garden", text:"竹林を抜ける長い階段廊下。抜けた先で、箱根の外輪山が一気に開けます。" },
+    food:{ kind:"kyo", text:"京の流れをくむ懐石。器と間の取り方まで含めて、料理そのものが体験になる種類の宿です。" },
+    story:{ kind:"koshitsu", text:"閑院宮家の別邸があった土地に、そのまま建つ宿。門や庭の一部に、宮家の時代の面影が残ります。" },
+    why:"露天風呂付きの客室があり、部屋の中で一泊を完結させることができます。「いつか泊まる宿」として名前が挙がりつづけてきた一軒。",
     caution:"敷地が斜面にあり、館内の移動に階段を使う場面があります。エレベーターの有無と客室の位置を、予約時にご確認ください。" },
 
   { id:"asaba", name:"あさば", area:"静岡県伊豆市・修善寺温泉", lat:34.9700, lng:138.9250,
@@ -529,13 +1351,28 @@ var SPOTS = [
     tagline:"池の向こうに能舞台がある宿は、日本にここだけ。",
     stay:"stay", kashikiri:"yes", terrain:"mild", spring:"アルカリ性単純温泉",
     wiki:"修善寺温泉",
-    photos:[{f:"shuzenji.jpg", cap:"修善寺温泉の風景", kind:"周辺"}],
-    why:"庭の池に張り出した能舞台「月桂殿」を持つ、日本屈指の数寄屋の宿。ルレ・エ・シャトー加盟。露天風呂付きの客室があり、静けさの質がまったく違うと言われます。この帖でいちばん遠く、いちばん「目標」らしい一軒です。" },
+    view:{ kind:"garden", text:"庭の池に張り出した能舞台「月桂殿」。部屋から眺める、それだけのための庭です。" },
+    food:{ kind:"kyo", text:"数寄屋の宿の懐石。伊豆の海と山の両方が、一献ずつ静かに出てきます。" },
+    story:{ kind:"bunjin", text:"能舞台は東京の宮家から移築されたもので、いまも実際に能や狂言が舞われます。修善寺は夏目漱石が大病から生還した地でもあり、文人がくりかえし訪れてきた温泉場です。" },
+    why:"庭の池に張り出した能舞台「月桂殿」を持つ、日本屈指の数寄屋の宿。露天風呂付きの客室があり、静けさの質がまったく違うと言われます。この帖でいちばん「目標」らしい一軒です。" },
+
+  { id:"ginsuiso", name:"稲取銀水荘", area:"静岡県東伊豆町・稲取温泉", lat:34.7850, lng:139.0450,
+    kaku:"全室オーシャンビュー／ユニバーサルデザイン客室あり",
+    tagline:"部屋の窓いっぱいに、相模灘と朝日。",
+    stay:"stay", kashikiri:"yes", terrain:"flat", spring:"ナトリウム-塩化物泉",
+    wiki:"稲取温泉",
+    view:{ kind:"sea", text:"全室が海に向いています。伊豆七島の影と、水平線から昇る朝日を部屋から見られます。この帖でいちばん海に近い宿。" },
+    food:{ kind:"umi", text:"稲取は金目鯛の港です。地金目鯛の煮付けが名物。夕食は部屋か食事処、どちらでも選べます。" },
+    story:{ kind:"densetsu", text:"稲取は「雛のつるし飾り」発祥の地。娘の健やかな育ちを願って細工物をひとつずつ吊るす風習が、江戸期から続いています。快癒を願う土地柄といえるかもしれません。" },
+    why:"露天風呂付きの客室が複数あり、さらにユニバーサルデザインの客室が一室用意されています。車椅子の貸出、大浴場の手すり、客室の洋式トイレも整っていると公表されている、この帖でただひとつ「体の不安に具体的に答えている」宿です。海の眺め・料理・動きやすさの三つが同時に揃う、現実的な本命。" },
 
   { id:"biwa", name:"無雙庵 枇杷", area:"静岡県東伊豆町", lat:34.8300, lng:139.0500,
     kaku:"客室八室のみ／全室 露天風呂付きの離れ",
     tagline:"八室だけ。海を見下ろす離れで、誰とも会わずに終える。",
     stay:"stay", kashikiri:"yes", terrain:"mild", spring:"ナトリウム-塩化物泉",
+    view:{ kind:"sea", text:"高台の離れから、相模灘を見下ろします。部屋の露天につかったまま、海を眺められます。" },
+    food:{ kind:"umi", text:"伊豆の海の幸を中心にした会席を、部屋または個室で。人前に出る場面がありません。" },
+    story:{ kind:"kenchiku", text:"八室それぞれが独立した離れという、思いきった設計そのものが、この宿の物語です。" },
     why:"客室が八つしかない、高台の離れ形式の宿。全室に露天風呂が付き、食事も部屋または個室で供されます。人と顔を合わせずに一泊を終えられる設計で、装具のことを気にする場面がそもそも生まれません。" }
 ];
 
@@ -574,6 +1411,32 @@ function fmtDate(ts){ if(!ts) return ""; var d = new Date(ts); return (d.getMont
 function starHtml(n){ var h=""; for(var i=1;i<=5;i++){ h += i<=n ? "★" : '<span class="off">★</span>'; } return h; }
 function roman(n){ return ["","I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"][n] || String(n); }
 
+var VIEW = {
+  sea:      { label:"海を望む",     short:"海" },
+  lake:     { label:"湖のほとり",   short:"湖" },
+  gorge:    { label:"渓谷・川沿い", short:"渓谷" },
+  mountain: { label:"山ふところ",   short:"山" },
+  garden:   { label:"庭と建築",     short:"庭" }
+};
+var VIEW_ORDER = ["sea","lake","gorge","mountain","garden"];
+var FOOD = {
+  irori:  { label:"囲炉裏を囲む" },
+  umi:    { label:"海の幸" },
+  kaiseki:{ label:"山の幸の会席" },
+  kyo:    { label:"京の懐石" },
+  yo:     { label:"西洋料理" },
+  yojo:   { label:"体をいたわる献立" }
+};
+var FOOD_ORDER = ["irori","umi","kaiseki","kyo","yo","yojo"];
+var STORY = {
+  densetsu:{ label:"開湯伝説・言い伝え" },
+  bunjin:  { label:"文人・著名人ゆかり" },
+  koshitsu:{ label:"皇室・宮家ゆかり" },
+  toji:    { label:"薬湯と湯治の歴史" },
+  kenchiku:{ label:"建築そのものが物語" }
+};
+var STORY_ORDER = ["densetsu","bunjin","koshitsu","toji","kenchiku"];
+
 var TERRAIN = { flat:{label:"ほぼ平坦",cls:"yes"}, mild:{label:"多少の段差",cls:""}, hilly:{label:"坂・階段が多い",cls:"no"} };
 var STATUS = [ {v:0,t:"未確認",sub:"まだ聞いていない"}, {v:1,t:"電話でOK",sub:"確認が取れた"}, {v:2,t:"泊まった",sub:"行ってきた"} ];
 var RATE_WORD = ["", "いつか", "気になる", "行ってみたい", "かなり行きたい", "ここに行く"];
@@ -581,7 +1444,7 @@ var RATE_WORD = ["", "いつか", "気になる", "行ってみたい", "かな�
 SPOTS.forEach(function(s){
   s.km = distanceKm(HOME, s);
   s.min = driveMin(s.km);
-  s.photos = s.photos || [];
+  s.photos = PHOTOS[s.id] || [];
 });
 
 function linksFor(s){
@@ -676,10 +1539,11 @@ function checkFor(id){ return Store.data.checks[id] || null; }
 function myRating(id){ return Store.data.ratings[id + "__" + CID] || null; }
 
 /* ===================== 状態 ===================== */
-var UI = { fKashikiri:false, fFlat:false, fDay:false, sort:"dist", far:999, openId:null, draftStars:0 };
+var UI = { fSea:false, fKashikiri:false, fFlat:false, fDay:false, sort:"dist", far:999, axis:"view", openId:null, draftStars:0 };
 
 function filtered(){
   return SPOTS.filter(function(s){
+    if(UI.fSea && (!s.view || s.view.kind !== "sea")) return false;
     if(UI.fKashikiri && s.kashikiri !== "yes") return false;
     if(UI.fFlat && s.terrain === "hilly") return false;
     if(UI.fDay && s.stay !== "both") return false;
@@ -695,19 +1559,32 @@ function filtered(){
   });
 }
 
-function shotHtml(s){
-  if(s.photos.length){
-    var p = s.photos[0];
-    return '<span class="shot"><img src="img/'+p.f+'" alt="'+esc(p.cap)+'" loading="lazy">'
-         + '<span class="kind">'+esc(p.kind)+'の写真</span></span>';
-  }
-  return '<span class="plate"><span>湯</span></span>';
+function capOf(p){ return (p.cap ? p.cap + " ・ " : "") + p.kind + "の写真"; }
+
+function galHtml(s, eager){
+  var ph = s.photos || [];
+  if(!ph.length) return '<div class="plate"><span>湯</span></div>';
+  var caps = JSON.stringify(ph.map(capOf)).replace(/"/g, "&quot;");
+  return '<div class="gwrap" data-open="'+s.id+'" data-caps="'+caps+'">'
+    + '<div class="gstrip">'
+    +   ph.map(function(p, i){
+          return '<img src="img/'+p.f+'" alt="'+esc(p.cap || s.name)+'"'
+               + ((eager && i === 0) ? '' : ' loading="lazy"') + ' decoding="async">';
+        }).join("")
+    + '</div>'
+    + '<span class="gcap">'+esc(capOf(ph[0]))+'</span>'
+    + (ph.length > 1
+        ? '<span class="gcount">1 / '+ph.length+'</span>'
+        + '<span class="gdots">'+ph.map(function(_, i){ return '<i'+(i ? '' : ' class="on"')+'></i>'; }).join("")+'</span>'
+        : '')
+    + '</div>';
 }
 
 function metaHtml(s){
   var a = avgFor(s.id), c = checkFor(s.id), h = "";
   h += '<span class="km">'+s.km.toFixed(0)+'<span style="font-size:11px"> km</span></span>';
   h += '<span>車 約'+fmtMin(s.min)+'</span>';
+  if(s.view) h += '<span class="'+(s.view.kind==="sea"?"sea":"")+'">'+VIEW[s.view.kind].label+'</span>';
   if(s.kashikiri === "yes") h += '<span class="yes">客室露天・貸切あり</span>';
   h += '<span class="'+TERRAIN[s.terrain].cls+'">'+TERRAIN[s.terrain].label+'</span>';
   if(s.stay === "both") h += '<span>日帰り入浴も</span>';
@@ -718,8 +1595,9 @@ function metaHtml(s){
 }
 
 function entryHtml(s, n){
-  return '<li><button class="entry" type="button" data-open="'+s.id+'">'
-    + shotHtml(s)
+  return '<li class="entry">'
+    + galHtml(s, n <= 2)
+    + '<button class="etext" type="button" data-open="'+s.id+'">'
     + '<span class="rank-n">'+roman(n)+'</span>'
     + '<h3>'+esc(s.name)+'</h3>'
     + '<p class="kaku">'+esc(s.kaku)+'</p>'
@@ -736,6 +1614,7 @@ function renderFeed(){
   $("#feed").innerHTML = rows.length
     ? rows.map(function(s,i){ return entryHtml(s, i+1); }).join("")
     : '<li class="empty">この条件に合う宿はありませんでした。<br>絞り込みをひとつ外してみてください。</li>';
+  initGalleries();
 }
 
 function renderRank(){
@@ -744,6 +1623,36 @@ function renderRank(){
     return { s:s, avg: a ? a.avg : -1 };
   }).sort(function(x,y){ return y.avg !== x.avg ? y.avg - x.avg : x.s.km - y.s.km; });
   $("#ranklist").innerHTML = rows.map(function(r,i){ return entryHtml(r.s, i+1); }).join("");
+  initGalleries();
+}
+
+var AXIS_META = {
+  view:  { dict:VIEW,  order:VIEW_ORDER,  top:"sea",
+           note:"海を望む宿をいちばん上に置いています。そのあとは湖、渓谷、山、庭の順。" },
+  food:  { dict:FOOD,  order:FOOD_ORDER,  top:null,
+           note:"何をどう食べるかで並べています。量で押す宿はこの帖にはありません。" },
+  story: { dict:STORY, order:STORY_ORDER, top:null,
+           note:"お土産話になる由来や言い伝え。湯に入る前に読んでおくと、景色の見え方が変わります。" }
+};
+
+function renderCompare(){
+  var m = AXIS_META[UI.axis];
+  $("#axisnote").textContent = m.note;
+  var html = "";
+  m.order.forEach(function(kind){
+    var rows = SPOTS.filter(function(s){ return s[UI.axis] && s[UI.axis].kind === kind; })
+                    .sort(function(a,b){ return a.km - b.km; });
+    if(!rows.length) return;
+    html += '<h3 class="cgroup'+(kind===m.top?" top":"")+'">'+esc(m.dict[kind].label)
+          + '<em>'+rows.length+' inns</em></h3>';
+    html += rows.map(function(s){
+      return '<button class="crow" type="button" data-open="'+s.id+'">'
+        + '<span class="cmain"><b>'+esc(s.name)+'</b><small>'+esc(s[UI.axis].text)+'</small></span>'
+        + '<span class="ckm">'+s.km.toFixed(0)+'<i>km</i></span>'
+        + '</button>';
+    }).join("");
+  });
+  $("#comparebody").innerHTML = html;
 }
 
 function renderCheers(){
@@ -756,12 +1665,18 @@ function renderCheers(){
 }
 
 function renderCredits(){
-  var used = {};
-  SPOTS.forEach(function(s){ s.photos.forEach(function(p){ used[p.f] = true; }); });
-  $("#credits").innerHTML = Object.keys(used).map(function(f){
-    var c = CREDITS[f]; if(!c) return "";
-    return '<li>'+esc(f)+' — '+esc(c.by)+'／'+esc(c.lic)+' — <a href="'+c.url+'" target="_blank" rel="noopener">出典</a></li>';
-  }).join("");
+  var rows = [], seen = {};
+  SPOTS.forEach(function(s){
+    (s.photos || []).forEach(function(p){
+      var k = p.by + "|" + p.lic;
+      if(seen[k]) return; seen[k] = true;
+      rows.push('<li>' + esc(p.by) + '／' + esc(p.lic)
+        + (p.url ? ' — <a href="' + p.url + '" target="_blank" rel="noopener">出典</a>' : '') + '</li>');
+    });
+  });
+  var total = SPOTS.reduce(function(a, s){ return a + (s.photos ? s.photos.length : 0); }, 0);
+  $("#credits").innerHTML = '<li style="color:var(--washi-2)">全' + total + '枚／撮影者 '
+    + rows.length + '名（順不同）</li>' + rows.join("");
 }
 
 function renderSync(){
@@ -771,8 +1686,72 @@ function renderSync(){
 }
 
 function renderAll(){
-  renderFeed(); renderRank(); renderCheers(); renderSync();
+  renderFeed(); renderCompare(); renderRank(); renderCheers(); renderSync();
   if(UI.openId) renderSheet();
+}
+
+/* ===================== 写真ギャラリー ===================== */
+var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var galIO = null;
+
+function galPaint(g){
+  g.dots.forEach(function(d, j){ d.classList.toggle("on", j === g.i); });
+  if(g.cnt) g.cnt.textContent = (g.i + 1) + " / " + g.n;
+  if(g.cap && g.caps[g.i]) g.cap.textContent = g.caps[g.i];
+}
+function galStart(w){
+  var g = w._g;
+  if(!g || g.n < 2 || g.timer || REDUCED) return;
+  g.timer = setInterval(function(){
+    if(Date.now() - g.hold < 6000) return;
+    g.i = (g.i + 1) % g.n;
+    try{ g.strip.scrollTo({ left: g.i * g.strip.clientWidth, behavior:"smooth" }); }
+    catch(e){ g.strip.scrollLeft = g.i * g.strip.clientWidth; }
+    galPaint(g);
+  }, 3600);
+}
+function galStop(w){ var g = w._g; if(g && g.timer){ clearInterval(g.timer); g.timer = null; } }
+
+function initGalleries(){
+  if(!galIO && window.IntersectionObserver){
+    galIO = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting && e.intersectionRatio >= 0.5) galStart(e.target);
+        else galStop(e.target);
+      });
+    }, { threshold:[0, 0.5, 1] });
+  }
+  $$(".gwrap").forEach(function(w){
+    if(w._g) return;
+    var strip = w.querySelector(".gstrip");
+    if(!strip) return;
+    var caps = [];
+    try{ caps = JSON.parse(w.getAttribute("data-caps") || "[]"); }catch(e){}
+    var g = {
+      strip: strip, n: strip.children.length, i: 0, hold: 0, timer: null, caps: caps,
+      dots: Array.prototype.slice.call(w.querySelectorAll(".gdots i")),
+      cnt: w.querySelector(".gcount"), cap: w.querySelector(".gcap")
+    };
+    w._g = g;
+    strip.addEventListener("scroll", function(){
+      clearTimeout(g.st);
+      g.st = setTimeout(function(){
+        var i = Math.round(strip.scrollLeft / Math.max(1, strip.clientWidth));
+        if(i !== g.i && i >= 0 && i < g.n){ g.i = i; galPaint(g); }
+      }, 90);
+    }, { passive:true });
+    w.addEventListener("pointerdown", function(e){
+      g.hold = Date.now(); g.x = e.clientX; g.y = e.clientY; w._moved = false; galStop(w);
+    });
+    w.addEventListener("pointermove", function(e){
+      if(Math.abs(e.clientX - g.x) > 10 || Math.abs(e.clientY - g.y) > 10) w._moved = true;
+    });
+    w.addEventListener("pointerup", function(){
+      g.hold = Date.now();
+      setTimeout(function(){ galStart(w); }, 6200);
+    });
+    if(galIO) galIO.observe(w);
+  });
 }
 
 /* ===================== 詳細 ===================== */
@@ -785,10 +1764,11 @@ function sheetHtml(s){
   var gal = s.photos.length
     ? '<div class="gal'+(s.photos.length===1?" one":"")+'">'
       + s.photos.map(function(p){
-          var cr = CREDITS[p.f] || {};
-          return '<figure><img src="img/'+p.f+'" alt="'+esc(p.cap)+'" loading="lazy">'
-            + '<figcaption><b>'+esc(p.cap)+'</b>（'+esc(p.kind)+'の写真）<br>'
-            + esc(cr.by||"—")+'／'+esc(cr.lic||"—")+'・ウィキメディア・コモンズ</figcaption></figure>';
+          return '<figure><img src="img/'+p.f+'" alt="'+esc(p.cap || s.name)+'" loading="lazy">'
+            + '<figcaption><b>'+esc(p.cap || s.name)+'</b>（'+esc(p.kind)+'の写真）<br>'
+            + esc(p.by||"—")+'／'+esc(p.lic||"—")
+            + (p.url ? ' ・<a href="'+p.url+'" target="_blank" rel="noopener">出典</a>' : '')
+            + '</figcaption></figure>';
         }).join("") + '</div>'
     : '<div class="gal one" style="padding-top:20px"><figure><span class="plate"><span>湯</span></span>'
       + '<figcaption>この宿の、自由に使える写真は見つかりませんでした。'
@@ -812,6 +1792,12 @@ function sheetHtml(s){
   +     (s.caution ? '<p class="alert">'+esc(s.caution)+'</p>' : '')
   +   '</div>'
 
+  +   '<div class="blk"><h4>Three Measures</h4><dl class="axes">'
+  +     (s.view  ? '<dt><span class="ax">View</span>景色 ／ '+esc(VIEW[s.view.kind].label)+'</dt><dd>'+esc(s.view.text)+'</dd>' : '')
+  +     (s.food  ? '<dt><span class="ax">Table</span>料理 ／ '+esc(FOOD[s.food.kind].label)+'</dt><dd>'+esc(s.food.text)+'</dd>' : '')
+  +     (s.story ? '<dt><span class="ax">Story</span>ゆかり ／ '+esc(STORY[s.story.kind].label)+'</dt><dd>'+esc(s.story.text)+'</dd>' : '')
+  +   '</dl></div>'
+
   +   '<div class="blk"><h4>Find Out More</h4><div class="links">'
   +     linksFor(s).map(function(l,i){
           return '<a href="'+l.href+'" target="_blank" rel="noopener">'
@@ -822,6 +1808,7 @@ function sheetHtml(s){
   +   '</div></div>'
 
   +   '<div class="blk"><h4>The Inn</h4><dl class="facts">'
+  +     '<dt>景色</dt><dd>'+(s.view ? (s.view.kind==="sea" ? '<span class="yes">'+VIEW[s.view.kind].label+'</span>' : VIEW[s.view.kind].label) : '—')+'</dd>'
   +     '<dt>客室露天・貸切</dt><dd>'+kashi+'</dd>'
   +     '<dt>坂・段差</dt><dd>'+terr+'</dd>'
   +     '<dt>行き方</dt><dd>'+(s.stay==="both" ? "泊まり／日帰り入浴も" : "泊まり")+'</dd>'
@@ -900,6 +1887,8 @@ document.addEventListener("click", function(e){
   var t = e.target; if(!t.closest) return;
   if(t.closest("a")) return;
 
+  var gw = t.closest(".gwrap");
+  if(gw && gw._moved){ gw._moved = false; return; }
   var openBtn = t.closest("[data-open]");
   if(openBtn){ openSheet(openBtn.getAttribute("data-open")); return; }
   if(t.closest("#scrim") || t.closest("#sheetclose")){ closeSheet(); return; }
@@ -914,7 +1903,8 @@ document.addEventListener("click", function(e){
 
   var tog = t.closest(".tog");
   if(tog){
-    if(tog.id === "f-kashikiri"){ UI.fKashikiri = !UI.fKashikiri; tog.setAttribute("aria-pressed", String(UI.fKashikiri)); }
+    if(tog.id === "f-sea"){ UI.fSea = !UI.fSea; tog.setAttribute("aria-pressed", String(UI.fSea)); }
+    else if(tog.id === "f-kashikiri"){ UI.fKashikiri = !UI.fKashikiri; tog.setAttribute("aria-pressed", String(UI.fKashikiri)); }
     else if(tog.id === "f-flat"){ UI.fFlat = !UI.fFlat; tog.setAttribute("aria-pressed", String(UI.fFlat)); }
     else if(tog.id === "f-day"){ UI.fDay = !UI.fDay; tog.setAttribute("aria-pressed", String(UI.fDay)); }
     else if(tog.hasAttribute("data-sort")){
@@ -926,6 +1916,13 @@ document.addEventListener("click", function(e){
       $$(".tog[data-far]").forEach(function(c){ c.setAttribute("aria-pressed", String(c === tog)); });
     }
     renderFeed(); return;
+  }
+
+  var ax = t.closest("[data-axis]");
+  if(ax){
+    UI.axis = ax.getAttribute("data-axis");
+    $$("[data-axis]").forEach(function(b){ b.setAttribute("aria-pressed", String(b === ax)); });
+    renderCompare(); return;
   }
 
   var star = t.closest(".starbtn");
