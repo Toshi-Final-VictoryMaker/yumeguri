@@ -118,7 +118,7 @@ a{color:var(--kin)}
   background:linear-gradient(160deg, var(--sumi-3), var(--sumi-2) 62%, var(--sumi));
   border:1px solid var(--line);
 }
-.plate span{font-family:var(--mincho); font-size:15px; letter-spacing:.42em; color:var(--kin-2); padding-left:.42em}
+.plate span{font-family:var(--mincho); font-size:34px; letter-spacing:.2em; color:var(--kin-2); padding-left:.2em}
 
 .rank-n{
   font-family:var(--latin); font-size:13px; letter-spacing:.2em; color:var(--kin);
@@ -310,20 +310,27 @@ details.ask li b{color:var(--washi); font-weight:700}
   <section class="view wrap" id="view-find" role="tabpanel" aria-labelledby="tab-find">
 
     <p class="manifesto">
-      近所の日帰り湯は、ここには載せていません。<br>
-      <b>三百年続く湯宿、宮家の別邸跡、池に能舞台を浮かべた数寄屋。</b>
-      記念日に、あるいは一生に一度、行く価値のある十二軒だけを選びました。<br>
-      退院したら、どこから行きましょうか。
+      湯は、逃げません。<br>
+      <b>三百年前から同じ場所にわいて、いまも同じ温度で待っています。</b>
+      急ぐ必要は、どこにもありません。
+    </p>
+    <p class="manifesto" style="margin-top:18px; font-size:14.5px; line-height:2">
+      写真を眺めて、行きたい一軒に★をつけてください。
+      家族それぞれの★が集まると、どこから行くかが自然と決まります。
     </p>
 
-    <div class="seclabel">Notice</div>
-    <p class="manifesto" style="margin-top:0; font-size:14px; line-height:1.95">
-      厚生労働省と各都道府県は「ストーマ装具を正しく着けたままの入浴は衛生上問題ない」と通知を出しています。
-      堂々と入って大丈夫です。ただし<b>実際の対応は宿ごとに違います</b>。この帖は下調べです。
-      電話で確かめて、結果をここに書き足してください。
+    <div class="seclabel">Before You Go</div>
+    <p class="manifesto" style="margin-top:0; font-size:14.5px; line-height:2">
+      <b>湯につかることに、遠慮はいりません。</b>
+      厚生労働省と各都道府県は「ストーマ装具を正しく着けたままの入浴は、衛生上なんら問題ない」という通知を出しています。
+      断られる理由は、本来ないのです。
+    </p>
+    <p class="manifesto" style="margin-top:15px; font-size:14.5px; line-height:2">
+      とはいえ、宿ごとに勝手は違います。気になる一軒が決まったら、そのページの「電話で聞くこと」を
+      そのまま読み上げて確かめ、わかったことを書き残してください。次にこの帖を開いた家族に、そのまま伝わります。
     </p>
 
-    <div class="seclabel">Filter</div>
+    <div class="seclabel">Choose</div>
     <div class="filters">
       <div class="frow">
         <span class="fkey">条件</span>
@@ -356,7 +363,7 @@ details.ask li b{color:var(--washi); font-weight:700}
         <summary>写真について</summary>
         <p style="margin:12px 0 0">
           すべてウィキメディア・コモンズの自由ライセンス写真です。宿の公式サイトの写真は使っていません。
-          「宿の写真」と「周辺の風景」を区別して表示しています。
+          写真の左上に「宿の写真」「周辺の写真」と出るので、何が写っているかは見たままです。
         </p>
         <ul id="credits"></ul>
       </details>
@@ -366,8 +373,8 @@ details.ask li b{color:var(--washi); font-weight:700}
   <section class="view wrap" id="view-rank" role="tabpanel" aria-labelledby="tab-rank" hidden>
     <div class="seclabel">Ranking</div>
     <h2 class="secja">家族が選んだ順</h2>
-    <p class="manifesto" style="margin-top:0; font-size:14px">
-      みんなの★の平均で並びます。まだ誰も点けていない宿は下に。
+    <p class="manifesto" style="margin-top:0; font-size:14.5px; line-height:2">
+      家族それぞれがつけた★の平均で並びます。誰がどう思っているかは、一軒ずつ開けば読めます。
     </p>
     <ul class="feed" id="ranklist" style="margin-top:26px"></ul>
   </section>
@@ -376,11 +383,11 @@ details.ask li b{color:var(--washi); font-weight:700}
     <div class="seclabel">Letters</div>
     <h2 class="secja">応援ボード</h2>
     <p class="board-intro">
-      入院中のお父さんへ、ひとこと。<br>
-      「ここに一緒に行こう」でも、今日あったことでも。短くて大丈夫です。
+      この帖を開いた人みんなに届く、置き手紙のような場所です。<br>
+      「ここに一緒に行こう」でも、今日あったことでも。一行で十分です。
     </p>
     <form class="cheerform" id="cheerform">
-      <textarea id="cheertext" placeholder="例：法師温泉、明治の湯殿がそのまま残ってるって。退院したらまずここに行こう。" maxlength="400"></textarea>
+      <textarea id="cheertext" placeholder="例：法師温泉の写真、見た？ 雪の玄関がすごくよかった。退院したら、まずはここに行こう。" maxlength="400"></textarea>
       <button class="btn" type="submit">ひとこと送る</button>
     </form>
     <div class="whoami">
@@ -569,7 +576,7 @@ function roman(n){ return ["","I","II","III","IV","V","VI","VII","VIII","IX","X"
 
 var TERRAIN = { flat:{label:"ほぼ平坦",cls:"yes"}, mild:{label:"多少の段差",cls:""}, hilly:{label:"坂・階段が多い",cls:"no"} };
 var STATUS = [ {v:0,t:"未確認",sub:"まだ聞いていない"}, {v:1,t:"電話でOK",sub:"確認が取れた"}, {v:2,t:"泊まった",sub:"行ってきた"} ];
-var RATE_WORD = ["", "いつか、いつの日か", "気になる", "行ってみたい", "かなり行きたい", "ここに行きたい"];
+var RATE_WORD = ["", "いつか", "気になる", "行ってみたい", "かなり行きたい", "ここに行く"];
 
 SPOTS.forEach(function(s){
   s.km = distanceKm(HOME, s);
@@ -694,7 +701,7 @@ function shotHtml(s){
     return '<span class="shot"><img src="img/'+p.f+'" alt="'+esc(p.cap)+'" loading="lazy">'
          + '<span class="kind">'+esc(p.kind)+'の写真</span></span>';
   }
-  return '<span class="plate"><span>写真は宿へ</span></span>';
+  return '<span class="plate"><span>湯</span></span>';
 }
 
 function metaHtml(s){
@@ -745,7 +752,7 @@ function renderCheers(){
   list.sort(function(a,b){ return (b.at||0)-(a.at||0); });
   $("#cheerlist").innerHTML = list.length
     ? list.map(function(c){ return '<li><p>'+esc(c.text)+'</p><p class="who">'+esc(c.name||"名前なし")+' ／ '+fmtDate(c.at)+'</p></li>'; }).join("")
-    : '<li class="empty">まだひとこともありません。<br>最初のひとことを書いてみてください。</li>';
+    : '<li class="empty">まだ何も書かれていません。<br>最初の一行を。</li>';
 }
 
 function renderCredits(){
@@ -783,8 +790,9 @@ function sheetHtml(s){
             + '<figcaption><b>'+esc(p.cap)+'</b>（'+esc(p.kind)+'の写真）<br>'
             + esc(cr.by||"—")+'／'+esc(cr.lic||"—")+'・ウィキメディア・コモンズ</figcaption></figure>';
         }).join("") + '</div>'
-    : '<div class="gal one" style="padding-top:20px"><figure><span class="plate"><span>写真は宿へ</span></span>'
-      + '<figcaption>自由に使える写真が見つからなかった宿です。下の「写真をもっと見る」からご覧ください。</figcaption></figure></div>';
+    : '<div class="gal one" style="padding-top:20px"><figure><span class="plate"><span>湯</span></span>'
+      + '<figcaption>この宿の、自由に使える写真は見つかりませんでした。'
+      + '下の「写真をもっと見る」から、実際の様子をご覧いただけます。</figcaption></figure></div>';
 
   var kashi = s.kashikiri === "yes"
     ? '<span class="yes">あり</span>　人目を気にせず入れます'
@@ -804,7 +812,7 @@ function sheetHtml(s){
   +     (s.caution ? '<p class="alert">'+esc(s.caution)+'</p>' : '')
   +   '</div>'
 
-  +   '<div class="blk"><h4>Links</h4><div class="links">'
+  +   '<div class="blk"><h4>Find Out More</h4><div class="links">'
   +     linksFor(s).map(function(l,i){
           return '<a href="'+l.href+'" target="_blank" rel="noopener">'
             + '<span class="n">'+roman(i+1)+'</span>'
@@ -813,7 +821,7 @@ function sheetHtml(s){
         }).join("")
   +   '</div></div>'
 
-  +   '<div class="blk"><h4>This Inn</h4><dl class="facts">'
+  +   '<div class="blk"><h4>The Inn</h4><dl class="facts">'
   +     '<dt>客室露天・貸切</dt><dd>'+kashi+'</dd>'
   +     '<dt>坂・段差</dt><dd>'+terr+'</dd>'
   +     '<dt>行き方</dt><dd>'+(s.stay==="both" ? "泊まり／日帰り入浴も" : "泊まり")+'</dd>'
@@ -821,7 +829,7 @@ function sheetHtml(s){
   +     '<dt>レモンハウスから</dt><dd>直線 約'+s.km.toFixed(0)+'km ／ 車 約'+fmtMin(s.min)+'</dd>'
   +   '</dl></div>'
 
-  +   '<div class="blk"><h4>Confirmed?</h4>'
+  +   '<div class="blk"><h4>Our Notes</h4>'
   +     '<div class="st3">'
   +       STATUS.map(function(st){
             return '<button class="stbtn" type="button" data-status="'+st.v+'" aria-pressed="'+(c.status===st.v)+'">'
@@ -832,18 +840,18 @@ function sheetHtml(s){
   +     (c.at ? '<p class="stmeta">'+esc(c.by||"だれか")+' が '+fmtDate(c.at)+' に更新</p>' : '')
   +   '</div>'
 
-  +   '<div class="blk"><h4>Ask by phone</h4>'
+  +   '<div class="blk"><h4>Ask Them</h4>'
   +     '<details class="ask"><summary>そのまま読める、質問のリスト</summary><ol>'
   +       ASK_LIST.map(function(x){ return '<li>'+x+'</li>'; }).join("")
   +     '</ol></details></div>'
 
-  +   '<div class="blk"><h4>Your vote</h4>'
+  +   '<div class="blk"><h4>Your Star</h4>'
   +     '<div class="rateset" role="group" aria-label="行きたい度">'
   +       [1,2,3,4,5].map(function(i){
             return '<button class="starbtn" type="button" data-star="'+i+'" aria-pressed="'+(i<=stars)+'" aria-label="'+i+'点">★</button>';
           }).join("")
   +     '</div>'
-  +     '<p class="rlabel" id="ratelabel">'+(stars ? RATE_WORD[stars] : "★を押して、行きたい度をつけてください")+'</p>'
+  +     '<p class="rlabel" id="ratelabel">'+(stars ? RATE_WORD[stars] : "★で、行きたい気持ちを残せます")+'</p>'
   +     '<textarea id="ratecomment" maxlength="300" style="margin-top:12px" placeholder="ひとこと（例：ここなら部屋の風呂だけで済むから安心だね）">'+esc(mine ? (mine.comment||"") : "")+'</textarea>'
   +     '<div class="rrow"><button class="btn" type="button" id="ratesave">この評価を残す</button>'
   +       (mine ? '<button class="btn btn-line" type="button" id="ratedel" style="flex:0 0 auto; padding:0 18px">消す</button>' : '')
@@ -851,7 +859,7 @@ function sheetHtml(s){
   +     '<p class="rlabel" id="ratesaved" style="margin-top:10px"></p>'
   +   '</div>'
 
-  +   '<div class="blk"><h4>Family voices（'+voices.length+'）</h4>'
+  +   '<div class="blk"><h4>The Family（'+voices.length+'）</h4>'
   +     (voices.length
         ? '<ul class="voice">' + voices.map(function(v){
             return '<li><div class="vt"><span class="vn">'+esc(v.name||"名前なし")+'</span>'
@@ -859,7 +867,7 @@ function sheetHtml(s){
               + '<span class="vd">'+fmtDate(v.at)+'</span></div>'
               + (v.comment ? '<p>'+esc(v.comment)+'</p>' : '') + '</li>';
           }).join("") + '</ul>'
-        : '<div class="empty">まだ誰も書いていません。<br>いちばんに書いてみてください。</div>')
+        : '<div class="empty">まだ誰の★もついていません。<br>いちばんに。</div>')
   +   '</div>'
   + '</div>';
 }
@@ -931,7 +939,7 @@ document.addEventListener("click", function(e){
   if(t.closest("#ratesave")){
     var sid = UI.openId;
     var st = UI.draftStars || (myRating(sid) ? myRating(sid).stars : 0);
-    if(!st){ $("#ratesaved").textContent = "★を押して、行きたい度をつけてください"; return; }
+    if(!st){ $("#ratesaved").textContent = "★を押してから、もう一度どうぞ"; return; }
     var nm = ($("#myname").value || "").trim();
     if(nm) setMyName(nm);
     Store.put("ratings", "yumeguri_ratings", sid + "__" + CID, {
